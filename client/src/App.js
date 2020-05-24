@@ -26,11 +26,11 @@ class App extends Component {
   }
 
   render() {
+    console.log('key',process.env.REACT_APP_FB_APP_ID)
     return (
       <div className="App">
         <FacebookLoginBtn
           appId={process.env.REACT_APP_FB_APP_ID}
-          disableMobileRedirect={true}
           autoLoad = {false}
           fields="name,email,picture,first_name"
           callback={this.responseFacebook}
