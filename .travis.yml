@@ -23,10 +23,10 @@ deploy:
   edge: true
   provider: elasticbeanstalk
   region: "us-east-2"
-  app: "fvgworld-complex"
-  env: "FvgworldComplex-env"
+  app: "fvgworld-zones"
+  env: "fvgworldZones-env"
   bucket_name: "elasticbeanstalk-us-east-2-183542197216"
-  bucket_path: "fvgworld-complex"
+  bucket_path: "fvgworld-zones"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
