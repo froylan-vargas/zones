@@ -1,0 +1,33 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t froylandcito/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true froylandcito/react-test npm test
+
+after_success:
+  - docker build -t froylandcito/zones-ui ./client
+  - docker build -t froylandcito/zones-nginx ./nginx
+  - docker build -t froylandcito/zones-api ./server
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push froylandcito/zones-ui
+  - docker push froylandcito/zones-nginx
+  - docker push froylandcito/zones-api
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "fvgworld-complex"
+  env: "FvgworldComplex-env"
+  bucket_name: "elasticbeanstalk-us-east-2-183542197216"
+  bucket_path: "fvgworld-complex"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
