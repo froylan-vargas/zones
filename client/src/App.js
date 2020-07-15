@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 
-import './App.css';
+import HomePage from './pages/homepage/homepage.component'
 
 class App extends Component {
 
-  async componentDidMount(){
-    const testResponse = await axios.get('/api/status'); 
-    console.log(testResponse);
+  async componentDidMount() {
+    /* const testResponse = await axios.get('/api/status'); 
+    console.log(testResponse); */
   }
 
   render() {
     return (
       <div className="App">
-        <span>Hello from zones</span>
+        <HomePage />
       </div>
     );
   }

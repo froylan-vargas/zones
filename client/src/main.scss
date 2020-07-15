@@ -1,0 +1,21 @@
+@import "./sass/abstracts/mixins";
+@import "./sass/abstracts/functions";
+@import "./sass/abstracts/variables";
+
+@import "./sass/base/base";
+@import "./sass/base/typography";
+@import "./sass/base/utilities";
+@import "./sass/base/animations";
+
+@import "./sass/layout/grid";
+
+//Layout
+@import "./components/header/header.styles.scss";
+
+//Pages
+@import "./pages/homepage/homepage.styles.scss";
+
+//Components
+@import "./components/button/button.styles.scss";
+@import "./components/promotion/promotion.styles.scss";
+

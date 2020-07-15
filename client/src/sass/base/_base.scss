@@ -1,0 +1,13 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%; // 10/16 = 62.5%. The 10 is because 10 pixels is 1rem.
+}
+
+body {
+    box-sizing: border-box;
+}
