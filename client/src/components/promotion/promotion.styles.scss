@@ -2,6 +2,7 @@
     color: $color-white;
     padding: 2rem;
     height: 100%;
+    width: 100%;
     text-align: center;
     display: table;
 
@@ -28,7 +29,7 @@
     }
 
     &__image{
-        width: 15rem;
-        height: 15rem;
+        width: 14rem;
+        height: 25rem;
     }
 }
