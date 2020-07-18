@@ -3,6 +3,7 @@ CREATE TABLE product (
     categoryId INTEGER REFERENCES category(id),
 	name VARCHAR(100),
     price MONEY,
+    images TEXT,
     createdON TIMESTAMP NOT NULL,
     modifiedON TIMESTAMP NULL,
     isActive BOOLEAN DEFAULT TRUE
