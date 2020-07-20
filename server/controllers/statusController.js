@@ -1,5 +1,5 @@
 const handleStatusCheck = (req,res) => {
-    res.send('app is working')
+    res.send('app is easy')
 }
 
 module.exports = {

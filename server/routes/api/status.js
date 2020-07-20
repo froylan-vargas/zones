@@ -1,7 +1,8 @@
-const router = require("express").Router();
+const router = require("express").Router()
 
-const statusController = require("../../controllers/statusController");
+const productController = require("../../controllers/statusController")
+const statusController = require("../../controllers/statusController")
 
-router.route("/").get(statusController.handleStatusCheck);
+router.route("/").get(statusController.handleStatusCheck)
 
-module.exports = router;
+module.exports = router
