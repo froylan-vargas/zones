@@ -1,11 +1,11 @@
-const Product = require('../models/product');
+const Category = require('../models/category');
 const { sequelize } = require('../config/database');
 
-const getAllProducts = async (req,res) => {
+const getCategories = async (req,res) => {
     try {
-        const products = await Product.findAll()
+        const categories = await Category.findAll()
         res.json({
-            data: products
+            categories
         })
     } catch (err) {
         console.log(err)
@@ -14,5 +14,5 @@ const getAllProducts = async (req,res) => {
 }
 
 module.exports = {
-    getAllProducts
+    getCategories
 }
