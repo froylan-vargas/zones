@@ -16,6 +16,7 @@
 //Pages
 @import "./pages/homepage/homepage.styles.scss";
 @import "./pages/admin-mainpage/admin-mainpage.styles.scss";
+@import "./pages/admin-products-page/admin-products-page.styles.scss";
 
 //Components
 @import "./components/button/button.styles.scss";
@@ -24,4 +25,8 @@
 @import "./components/product/product.styles.scss";
 @import "./components/logo/logo.styles.scss";
 @import "./components/select/select.styles.scss";
+@import "./components/admin-product-list/admin-product-list.styles.scss";
+@import "./components/admin-main-content/admin-main-content.styles.scss";
+@import "./components/product-bulk-options/product-bulk-options.styles.scss";
+@import "./components/admin-product/admin-product.styles.scss";
 

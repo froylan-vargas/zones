@@ -39,7 +39,6 @@ const preTransformCurrentProducts = currentProducts => {
 const productsToTemplateFormat = currentProducts => {
     return currentProducts.map(product => {
         return {
-            categoryid: product.categoryid,
             name: product.name,
             price: product.price,
             images: product.images,
@@ -50,7 +49,7 @@ const productsToTemplateFormat = currentProducts => {
 
 const createTemplateData = transformedProducts => {
     let templateData = [
-        ['categoryid', 'name', 'price', 'images', 'isactive']
+        ['name', 'price', 'images', 'isactive']
     ]
     transformedProducts.forEach(transformedProduct => {
         templateData.push(Object.values(transformedProduct));

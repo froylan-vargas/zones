@@ -13,9 +13,33 @@ const getAllProducts = async (req,res) => {
     }
 }
 
+const getProductByCategoryId = async (req,res) => {
+    const { categoryId } = req.params;
+    try {
+        const products = _getProductsByCategoryId(categoryId);
+        res.json({
+            data: products
+        })
+    } catch(err){
+        res.send(err);
+    }
+}
+
 const _getProducts = async () => {
     try {
         return await Product.findAll({})
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const _getProductsByCategoryId = async (categoryid) => {
+    try {
+        return await Product.findAll({
+            where:{
+                categoryid
+            }
+        })
     } catch (err) {
         console.log(err);
     }
@@ -28,11 +52,12 @@ const createProduct = async (product, transaction) => {
     })
 }
 
-const batchUpload = async (productsToUpload, availableProducts) => {
+const batchUpload = async (productsToUpload, availableProducts, categoryId) => {
     try {
         await sequelize.transaction(async (t) => {
             const promises = [];
             productsToUpload.forEach(async productToUpload => {
+                productToUpload.categoryid = categoryId;
                 const availableProduct = availableProducts[productToUpload.name.toLowerCase()];
                 let promise = null;
                 if (!availableProduct) {
@@ -53,7 +78,8 @@ const batchUpload = async (productsToUpload, availableProducts) => {
 }
 
 module.exports = {
-    getAllProducts,
-    _getProducts, 
-    batchUpload
+    getAllProducts, 
+    batchUpload, 
+    getProductByCategoryId,
+    _getProductsByCategoryId
 }

@@ -2,6 +2,6 @@ const router = require("express").Router()
 
 const downloadController = require("../../controllers/download.controller")
 
-router.route("/products").get(downloadController.handleExcelDownload)
+router.route("/products/:categoryId").get(downloadController.handleExcelDownload)
 
 module.exports = router

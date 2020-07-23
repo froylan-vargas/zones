@@ -1,8 +1,12 @@
 import ProductActionTypes from './product.types'
 
-export const fetchProductsStart = () => ({
-    type: ProductActionTypes.FETCH_PRODUCTS_START
-})
+export const fetchProductsStart = categoryId => {
+    console.log('action ' + categoryId)
+    return {
+        type: ProductActionTypes.FETCH_PRODUCTS_START,
+        payload: categoryId
+    }
+} 
 
 export const fetchProductsSuccess = products => ({
     type: ProductActionTypes.FETCH_PRODUCTS_SUCCESS,

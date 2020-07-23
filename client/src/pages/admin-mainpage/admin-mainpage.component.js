@@ -1,85 +1,19 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
-import axios from 'axios'
-import download from 'downloadjs'
+import React from 'react'
+import { Switch, Route, Link } from 'react-router-dom'
 
-import { fetchCategoriesStart } from '../../redux/category/category.actions'
-import { selectCategories, selectIsFetchingCategories } from '../../redux/category/category.selectors'
+import AdminProductsPage from '../../pages/admin-products-page/admin-products-page.component'
+import AdminMainContent from '../../components/admin-main-content/admin-main-content.component'
 
-import Select from '../../components/select/select.component'
-
-class AdminMainpage extends Component {
-
-    state = {
-        file: undefined,
-        loaded: 0 //This can be used to create a progress bar. 
-    }
-
-    componentDidMount() {
-        const { fetchCategoriesStart } = this.props;
-        fetchCategoriesStart()
-    }
-
-    onCategorySelected = event => {
-        if (event.target.value) {
-            console.log('is working!');
-        }
-    }
-
-    onSelectFile = event => {
-        this.setState({
-            file: event.target.files[0],
-            loaded: 0
-        });
-    }
-
-    onFileUpload = async () => {
-        const data = new FormData();
-        data.append('file', this.state.file)
-        const fileResult = await axios.post('/api/upload/products', data);
-        console.log(fileResult);
-    }
-
-    onFileDownload = async () => {
-        const res = await axios.get('/api/download/products', { responseType: 'blob' });
-        const blob = new Blob([res.data]);
-        download(blob,'Lista_Productos.xlsx');
-    }
-
-    render() {
-        const { categories, isFetchingCategories } = this.props;
-        const categoryOptions = !isFetchingCategories && categories ?
-            categories.map(category => {
-                return <option key={category.id} value={category.id}>{category.name}</option>
-            })
-            : []
-        return (
-            <div className='adminMainPage'>
-                <Select onChange={this.onCategorySelected}>
-                    <option value="">Selecciona una categoría</option>
-                    {categoryOptions}
-                </Select>
-                <form method="post" action="#" id="#">
-                    <div className="form-group">
-                        <label>Upload Your File</label>
-                        <input type="file" className="form-control" onChange={this.onSelectFile} />
-                    </div>
-                    <button type="button" onClick={this.onFileUpload}>Upload</button>
-                </form>
-                <button type="button" onClick={this.onFileDownload}>Download</button>
-            </div>
-        )
-    }
+const AdminMainpage = ({match}) => {
+    return (        
+        <div className="admin-main-page">
+            <Link to={`/`}>Home</Link><br />
+            <Link to={`${match.url}/products`}>Manage products</Link><br />
+            <Link to={`${match.url}`}>Admin Dashboard</Link><br />
+            <Route exact path={`${match.path}`} component={AdminMainContent} />
+            <Route path={`${match.path}/products`} component={AdminProductsPage} />
+        </div>
+    )
 }
 
-const mapStateToProps = createStructuredSelector({
-    categories: selectCategories,
-    isFetchingCategories: selectIsFetchingCategories,
-})
-
-const mapDispatchToProps = dispatch => ({
-    fetchCategoriesStart: () => dispatch(fetchCategoriesStart())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminMainpage)
+export default AdminMainpage
