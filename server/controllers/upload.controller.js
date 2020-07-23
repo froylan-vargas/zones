@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { readUploadTemplate } = require('../utils/excel-reader');
 const { _getProducts, batchUpload} = require('../controllers/product.controller');
-const {preTransformCurrentProducts} = require('../models/product');
+const {preTransformCurrentProducts} = require('../models/product.model');
 const {transformArrayToObject} = require('../utils/array');
 
 const handleExcelUpload = async (req, res) => {
@@ -16,7 +16,7 @@ const handleExcelUpload = async (req, res) => {
         const transformed = transformArrayToObject(preTransformedCurrentProducts, 'name');
         await batchUpload(excelData, transformed);
         fs.unlinkSync(filePath);
-        res.send('upload succeded')
+        res.send("Upload succees");
     } catch (err) {
         res.status(400).json(err)
     }

@@ -16,11 +16,11 @@ const Product = sequelize.define('product', {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
     },
-    modifiedon: { type: Sequelize.DATE },
+    modifiedon: { type: 'TIMESTAMP' },
     isactive: { type: Sequelize.BOOLEAN }
 }, { timestamps: false })
 
-const preTransformCurrentProducts = (currentProducts) => {
+const preTransformCurrentProducts = currentProducts => {
     return currentProducts.map(product => {
         const transformedProduct = {
             id: product.id,
@@ -36,7 +36,31 @@ const preTransformCurrentProducts = (currentProducts) => {
     });
 }
 
+const productsToTemplateFormat = currentProducts => {
+    return currentProducts.map(product => {
+        return {
+            categoryid: product.categoryid,
+            name: product.name,
+            price: product.price,
+            images: product.images,
+            isActive: product.isactive
+        }
+    });
+}
+
+const createTemplateData = transformedProducts => {
+    let templateData = [
+        ['categoryid', 'name', 'price', 'images', 'isactive']
+    ]
+    transformedProducts.forEach(transformedProduct => {
+        templateData.push(Object.values(transformedProduct));
+    });
+    return templateData;
+}
+
 module.exports = {
     Product,
-    preTransformCurrentProducts
+    preTransformCurrentProducts,
+    productsToTemplateFormat,
+    createTemplateData
 }

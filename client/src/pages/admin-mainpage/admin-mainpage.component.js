@@ -1,7 +1,8 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import axios from 'axios'
+import download from 'downloadjs'
 
 import { fetchCategoriesStart } from '../../redux/category/category.actions'
 import { selectCategories, selectIsFetchingCategories } from '../../redux/category/category.selectors'
@@ -27,7 +28,7 @@ class AdminMainpage extends Component {
     }
 
     onSelectFile = event => {
-        this.setState({ 
+        this.setState({
             file: event.target.files[0],
             loaded: 0
         });
@@ -35,9 +36,15 @@ class AdminMainpage extends Component {
 
     onFileUpload = async () => {
         const data = new FormData();
-        data.append('file',this.state.file)
-        const fileResult = await axios.post('/api/upload/excel', data);
+        data.append('file', this.state.file)
+        const fileResult = await axios.post('/api/upload/products', data);
         console.log(fileResult);
+    }
+
+    onFileDownload = async () => {
+        const res = await axios.get('/api/download/products', { responseType: 'blob' });
+        const blob = new Blob([res.data]);
+        download(blob,'Lista_Productos.xlsx');
     }
 
     render() {
@@ -60,6 +67,7 @@ class AdminMainpage extends Component {
                     </div>
                     <button type="button" onClick={this.onFileUpload}>Upload</button>
                 </form>
+                <button type="button" onClick={this.onFileDownload}>Download</button>
             </div>
         )
     }

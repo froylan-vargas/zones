@@ -1,4 +1,4 @@
-const {Product} = require('../models/product');
+const {Product} = require('../models/product.model');
 const { sequelize } = require('../config/database');
 
 const getAllProducts = async (req,res) => {
@@ -38,6 +38,7 @@ const batchUpload = async (productsToUpload, availableProducts) => {
                 if (!availableProduct) {
                     promise = createProduct(productToUpload, t);
                 } else {
+                    productToUpload.modifiedon = new Date(Date.now());
                     promise = Product.update(productToUpload, {
                         where: { id: availableProduct.id },
                     },{transaction:t})

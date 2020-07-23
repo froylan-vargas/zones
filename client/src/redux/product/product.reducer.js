@@ -1,25 +1,25 @@
-import CategoryActionTypes from './category.types'
+import ProductActionTypes from './product.types'
 
 const INITIAL_STATE = {
-    categories: null,
+    products: null,
     isFetching: false,
     errorMessage: undefined
 }
 
-const categoryReducer = (state = INITIAL_STATE, action) => {
+const productReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case CategoryActionTypes.FETCH_CATEGORIES_START:
+        case ProductActionTypes.FETCH_PRODUCTS_START:
             return {
                 ...state,
                 isFetching: true
             }
-        case CategoryActionTypes.FETCH_CATEGORIES_SUCCESS:
+        case ProductActionTypes.FETCH_PRODUCTS_SUCCESS:
             return {
                 ...state,
                 isFetching: false,
-                categories: action.payload
+                products: action.payload
             }
-        case CategoryActionTypes.FETCH_CATEGORIES_FAILURE:
+        case ProductActionTypes.FETCH_PRODUCTS_FAILURE:
             return {
                 ...state,
                 isFetching: false,
@@ -30,5 +30,5 @@ const categoryReducer = (state = INITIAL_STATE, action) => {
     }
 }
 
-export default categoryReducer;
+export default productReducer;
 
