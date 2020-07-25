@@ -7,9 +7,9 @@ import { selectCategories, selectIsFetchingCategories } from '../../redux/catego
 import { fetchProductsStart } from '../../redux/product/product.actions'
 import { selectProducts, selectIsFetchingProducts } from '../../redux/product/product.selectors'
 
-import Select from '../../components/select/select.component'
-import AdminProductList from '../../components/admin-product-list/admin-product-list.component'
-import ProductBulkOptions from '../../components/product-bulk-options/product-bulk-options.component'
+import Select from '../../components/elements/select/select.component'
+import ProductAdminList from '../../components/product/product-admin-list/product-admin-list.component'
+import ProductBulkOptions from '../../components/product/product-bulk-options/product-bulk-options.component'
 
 class AdminProductsPage extends Component {
     state = {
@@ -47,7 +47,7 @@ class AdminProductsPage extends Component {
                 </Select>
                 {this.state.selectedCategory ? <div>
                     <ProductBulkOptions categoryId={this.state.selectedCategory} />
-                    <AdminProductList products={products} isFetchingProducts={isFetchingProducts} />
+                    <ProductAdminList products={products} isFetchingProducts={isFetchingProducts} />
                 </div> : <span>Selecciona una categoría!</span>}
             </div>
         )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Logo from '../logo/logo.component'
+import Logo from '../../logo/logo.component'
 
 const Footer = () => {
     return (

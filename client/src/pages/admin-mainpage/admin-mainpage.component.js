@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 
 import AdminProductsPage from '../../pages/admin-products-page/admin-products-page.component'
 import AdminMainContent from '../../components/admin-main-content/admin-main-content.component'

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Button from '../button/button.component'
+import Button from '../elements/button/button.component'
 //import { ReactComponent as PromotionImage } from '../../assets/img/promo-flower.png'
 
 

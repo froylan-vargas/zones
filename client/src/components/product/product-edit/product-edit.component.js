@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Button from '../button/button.component'
+import Button from '../../elements/button/button.component'
 
 class ProductEdit extends Component {
 
