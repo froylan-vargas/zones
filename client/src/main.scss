@@ -10,16 +10,30 @@
 @import "./sass/layout/grid";
 
 //Layout
-@import "./components/header/header.styles.scss";
-@import "./components/footer/footer.styles.scss";
+@import "./components/layout/header/header.styles.scss";
+@import "./components/layout/footer/footer.styles.scss";
 
 //Pages
 @import "./pages/homepage/homepage.styles.scss";
+@import "./pages/admin-mainpage/admin-mainpage.styles.scss";
+@import "./pages/admin-products-page/admin-products-page.styles.scss";
+
+//Product Components
+@import "./components/product/product-list/product-list.styles.scss";
+@import "./components/product/product/product.styles.scss";
+@import "./components/product/product-bulk-options/product-bulk-options.styles.scss";
+@import "./components/product/product-admin/product-admin.styles.scss";
+@import "./components/product/product-edit/product-edit.styles.scss";
+@import "./components/product/product-admin-list/product-admin-list.styles.scss";
+
+//Element Components
+@import "./components/elements/button/button.styles.scss";
+@import "./components/elements/select/select.styles.scss";
 
 //Components
-@import "./components/button/button.styles.scss";
 @import "./components/promotion/promotion.styles.scss";
-@import "./components/product-list/product-list.styles.scss";
-@import "./components/product/product.styles.scss";
 @import "./components/logo/logo.styles.scss";
+@import "./components/admin-main-content/admin-main-content.styles.scss";
+@import "./components/edit-window/edit-window.styles.scss";
+@import "./components/images-edit/images-edit.styles.scss";
 

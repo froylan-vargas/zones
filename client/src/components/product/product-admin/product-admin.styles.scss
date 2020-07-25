@@ -1,0 +1,16 @@
+.product-admin{
+    margin-bottom: 2rem;
+    &__box{
+        display: table;
+
+        &--left{
+            display: table-cell;
+            background-color: blueviolet;
+        }
+
+        &--right{
+            display: table-cell;
+            background-color: brown;
+        }
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Promotion from '../promotion/promotion.component'
-import Logo from '../logo/logo.component'
+import Promotion from '../../promotion/promotion.component'
+import Logo from '../../logo/logo.component'
 
 const Header = () => {
     return (
