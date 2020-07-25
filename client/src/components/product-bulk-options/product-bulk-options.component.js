@@ -28,6 +28,10 @@ class ProductBulkOptions extends Component {
         download(blob, 'Lista_Productos.xlsx');
     }
 
+    onCategoryUpload = async (categoryId) => {
+        console.log('Image upload for category:', categoryId);
+    }
+
     render() {
         const {categoryId} = this.props;
         return (
@@ -37,9 +41,10 @@ class ProductBulkOptions extends Component {
                         <label>Upload Your File</label>
                         <input type="file" className="form-control" onChange={this.onSelectFile} />
                     </div>
-                    <button type="button" onClick={()=>{this.onFileUpload(categoryId)}}>Upload</button>
+                    <button type="button" onClick={()=>{this.onFileUpload(categoryId)}}>Upload Products</button>
                 </form>
                 <button type="button" onClick={()=>{this.onFileDownload(categoryId)}}>Download</button>
+                <button type="button" onClick={()=>{this.onCategoryUpload(categoryId)}}>Upload Images</button>
             </div>
         )
     }

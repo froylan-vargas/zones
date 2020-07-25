@@ -11,3 +11,13 @@ export const selectIsFetchingProducts = createSelector(
     [selectProduct],
     product => product.isFetching
 )
+
+export const selectShowEditWindow = createSelector(
+    [selectProduct],
+    product => product.showEditWindow
+)
+
+export const selectEditOptions = createSelector(
+    [selectProduct],
+    product => product.editOptions
+)

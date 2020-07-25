@@ -22,10 +22,11 @@ class AdminProductsPage extends Component {
     }
 
     onCategorySelected = async event => {
-        if (event.target.value) {
+        if (event.target.value && event.target.value!=='') {
             const { fetchProductsStart } = this.props;
             fetchProductsStart({ categoryId: event.target.value });
             this.setState({ selectedCategory: event.target.value })
+            
         } else {
             this.setState({ selectedCategory: undefined });
         }

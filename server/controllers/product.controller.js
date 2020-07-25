@@ -16,7 +16,7 @@ const getAllProducts = async (req,res) => {
 const getProductByCategoryId = async (req,res) => {
     const { categoryId } = req.params;
     try {
-        const products = _getProductsByCategoryId(categoryId);
+        const products = await _getProductsByCategoryId(categoryId);
         res.json({
             data: products
         })
@@ -35,11 +35,12 @@ const _getProducts = async () => {
 
 const _getProductsByCategoryId = async (categoryid) => {
     try {
-        return await Product.findAll({
+        const products = await Product.findAll({
             where:{
                 categoryid
             }
         })
+        return products
     } catch (err) {
         console.log(err);
     }

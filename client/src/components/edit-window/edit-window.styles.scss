@@ -1,0 +1,14 @@
+.edit-window{
+    background-color: red;
+    height: 200px;
+    width: 200px;
+    position: relative;
+
+    &__close{
+        color: white;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        cursor: pointer;
+    }
+}
