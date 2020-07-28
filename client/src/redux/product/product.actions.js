@@ -18,13 +18,11 @@ export const fetchProductsFailure = errorMessage => ({
 })
 
 export const setShowEditWindow = showEditWindow => {
-    console.log('action',showEditWindow);
     return {
         type: ProductActionTypes.SET_SHOW_EDIT_WINDOW,
         payload: showEditWindow
     }
 }
-
 
 export const setEditOptions = editOptions => ({
     type: ProductActionTypes.SET_EDIT_OPTIONS,

@@ -25,10 +25,13 @@
 @import "./components/product/product-admin/product-admin.styles.scss";
 @import "./components/product/product-edit/product-edit.styles.scss";
 @import "./components/product/product-admin-list/product-admin-list.styles.scss";
+@import "./components/product/product-create/product-create.styles.scss";
 
 //Element Components
 @import "./components/elements/button/button.styles.scss";
 @import "./components/elements/select/select.styles.scss";
+@import "./components/elements/form/form.styles.scss";
+@import "./components/elements/form-group/form-group.styles.scss";
 
 //Components
 @import "./components/promotion/promotion.styles.scss";
