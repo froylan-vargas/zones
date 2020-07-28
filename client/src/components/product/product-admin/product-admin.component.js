@@ -4,18 +4,19 @@ import { connect } from 'react-redux'
 import { setEditOptions, setShowEditWindow } from '../../../redux/product/product.actions'
 
 import { selectFirstImage } from '../../../utils/images.utils'
+import constants from '../../../utils/constants.utils'
 
 import Button from '../../elements/button/button.component'
 
-const onEditClick = (setShowEditWindow, selectEditOptions, product, type) => {
+const onEditClick = (setShowEditWindow, setEditOptions, product, type) => {
     const editOptions = { type, product }
     setShowEditWindow(true);
-    selectEditOptions(editOptions);
+    setEditOptions(editOptions);
 }
 
 const ProductAdmin = ({ product, setShowEditWindow, setEditOptions }) => {
-    const { id, name, price, isActive, images } = product;
-    const image = selectFirstImage(images);
+    const { id, name, price, isactive, images } = product;
+    const image = images ? selectFirstImage(images) : null;
     return (
         <div className='product-admin'>
             <div className='product-admin__box'>
@@ -34,19 +35,19 @@ const ProductAdmin = ({ product, setShowEditWindow, setEditOptions }) => {
                     </div>
                     <div className='adminInfoGroup'>
                         <span className='product-admin__label'>Status:</span>
-                        <span className='product-admin__value'>{isActive ? 'Activo' : 'Inactivo'}</span>
+                        <span className='product-admin__value'>{isactive ? 'Activo' : 'Inactivo'}</span>
                     </div>
                     <div className='adminInfoGroup'>
                         <span className='product-admin__label'>Imagenes:</span>
                         <span className='product-admin__value'>{images}</span>
                     </div>
                     <div className='product-admin__options'>
-                        <Button onClick={() => { onEditClick(setShowEditWindow, setEditOptions, product, 'product') }}>Editar</Button>
-                        <Button onClick={() => { onEditClick(setShowEditWindow, setEditOptions, product, 'images') }}>Images</Button>
+                        <Button onClick={() => { onEditClick(setShowEditWindow, setEditOptions, product, constants.EDIT_PRODUCT) }}>Editar</Button>
+                        <Button onClick={() => { onEditClick(setShowEditWindow, setEditOptions, product, constants.EDIT_IMAGES) }}>Images</Button>
                     </div>
                 </div>
                 <div className='product-admin__box--right'>
-                    <img className='product-admin__image' src={image} alt='product image' />
+                    <img className='product-admin__image' src={image} alt={image} />
                 </div>
             </div>
         </div>

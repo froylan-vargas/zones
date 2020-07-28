@@ -1,33 +1,26 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 
 import productValidators from '../../../utils/validators/product-validators.utils'
 
-import Button from '../../elements/button/button.component'
 import FormGroup from '../../elements/form-group/form-group.component'
+import Button from '../../elements/button/button.component'
 
-const ProductEdit = ({ product }) => {
+const CreateProduct = ({ categoryId }) => {
 
-    const [editProduct, setProductProperties] = useState({
-        name: product.name,
-        price: product.price,
-        isactive: product.isactive
+    const [product, setProductProperties] = useState({
+        name: '',
+        price: undefined
     });
 
     const [fieldErrors, setFieldError] = useState({
         name: [],
-        price: [],
-        isactive: []
-    })
+        price: []
+    });
 
     const onInputChange = (event) => {
-        if (event.target.name === 'isactive') {
-            setProductProperties({ ...editProduct, isactive: event.target.checked })
-        } else {
-            const { name, value } = event.target
-            setProductProperties({ ...editProduct, [name]: value });
-            validateInput(name, value);
-        }
+        const { name, value } = event.target
+        setProductProperties({ ...product, [name]: value });
+        validateInput(name, value);
     }
 
     const validateInput = (name, value) => {
@@ -41,42 +34,47 @@ const ProductEdit = ({ product }) => {
         }
     }
 
+    const validateFullProduct = () => {
+        const nameErrors = productValidators.validateProductName(product.name);
+        const priceErrors = productValidators.validatePrice(product.price);
+        return !nameErrors.length && !priceErrors.length
+    }
+
     const saveProduct = () => {
-        console.log('saving product!');
+        console.log('saving new product');
     }
 
     const onSave = (e) => {
         e.preventDefault();
-        if (fieldErrors.name.length || fieldErrors.price.length) return;
-        saveProduct();
+        if (validateFullProduct()) {
+            saveProduct();
+        } else {
+            setFieldError({
+                ...fieldErrors,
+                name: productValidators.validateProductName(product.name),
+                price: productValidators.validatePrice(product.price)
+            });
+        }
     }
 
     return (
-        <div className='product-edit'>
+        <div className='create-product'>
             <form className='form' method="post" action="#" id="#">
                 <FormGroup
                     name='name'
                     labelValue='Producto'
                     inputType='text'
-                    defaultValue={editProduct.name}
                     onChange={onInputChange}
                     errors={fieldErrors['name']}
+                    placeholder={'Enter a product name'}
                 />
                 <FormGroup
                     name='price'
                     labelValue='Precio'
                     inputType='number'
-                    defaultValue={editProduct.price}
                     onChange={onInputChange}
                     errors={fieldErrors['price']}
-                />
-                <FormGroup
-                    name='isactive'
-                    labelValue='Estatus'
-                    inputType='checkbox'
-                    defaultValue={editProduct.isactive}
-                    onChange={onInputChange}
-                    errors={fieldErrors['isactive']}
+                    placeholder={'0.00'}
                 />
                 <div className='form__options'>
                     <Button onClick={onSave}>Save</Button>
@@ -86,4 +84,4 @@ const ProductEdit = ({ product }) => {
     )
 }
 
-export default ProductEdit
+export default CreateProduct
