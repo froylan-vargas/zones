@@ -4,9 +4,9 @@ import axios from 'axios'
 
 import { fetchProductsSuccess, fetchProductsFailure } from './product.actions'
 
-function* fetchProductsAsync({ payload: { categoryId } }) {
+function* fetchProductsAsync() {
     try {
-        const products = yield call(() => { return axios.get(`/api/product/productsByCategory/${categoryId}`) })
+        const products = yield call(() => { return axios.get(`/api/product`) })
         yield put(fetchProductsSuccess(products.data.data))
     } catch (error) {
         yield put(fetchProductsFailure(error.message))

@@ -11,3 +11,8 @@ export const selectIsFetchingCategories = createSelector(
     [selectCategory],
     category => category.isFetching
 )
+
+export const selectSelectedCategory = createSelector(
+    [selectCategory],
+    category => category.selectedCategory
+)

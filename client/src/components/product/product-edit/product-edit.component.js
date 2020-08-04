@@ -1,55 +1,9 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-
-import productValidators from '../../../utils/validators/product-validators.utils'
+import React from 'react';
 
 import Button from '../../elements/button/button.component'
 import FormGroup from '../../elements/form-group/form-group.component'
 
-const ProductEdit = ({ product }) => {
-
-    const [editProduct, setProductProperties] = useState({
-        name: product.name,
-        price: product.price,
-        isactive: product.isactive
-    });
-
-    const [fieldErrors, setFieldError] = useState({
-        name: [],
-        price: [],
-        isactive: []
-    })
-
-    const onInputChange = (event) => {
-        if (event.target.name === 'isactive') {
-            setProductProperties({ ...editProduct, isactive: event.target.checked })
-        } else {
-            const { name, value } = event.target
-            setProductProperties({ ...editProduct, [name]: value });
-            validateInput(name, value);
-        }
-    }
-
-    const validateInput = (name, value) => {
-        switch (name) {
-            case 'name':
-                return setFieldError({ ...fieldErrors, [name]: productValidators.validateProductName(value) });
-            case 'price':
-                return setFieldError({ ...fieldErrors, [name]: productValidators.validatePrice(value) });
-            default:
-                break;
-        }
-    }
-
-    const saveProduct = () => {
-        console.log('saving product!');
-    }
-
-    const onSave = (e) => {
-        e.preventDefault();
-        if (fieldErrors.name.length || fieldErrors.price.length) return;
-        saveProduct();
-    }
+const ProductEdit = ({ product, onSave, onInputChange, fieldErrors }) => {
 
     return (
         <div className='product-edit'>
@@ -58,7 +12,7 @@ const ProductEdit = ({ product }) => {
                     name='name'
                     labelValue='Producto'
                     inputType='text'
-                    defaultValue={editProduct.name}
+                    defaultValue={product.name}
                     onChange={onInputChange}
                     errors={fieldErrors['name']}
                 />
@@ -66,7 +20,7 @@ const ProductEdit = ({ product }) => {
                     name='price'
                     labelValue='Precio'
                     inputType='number'
-                    defaultValue={editProduct.price}
+                    defaultValue={product.price}
                     onChange={onInputChange}
                     errors={fieldErrors['price']}
                 />
@@ -74,7 +28,7 @@ const ProductEdit = ({ product }) => {
                     name='isactive'
                     labelValue='Estatus'
                     inputType='checkbox'
-                    defaultValue={editProduct.isactive}
+                    defaultValue={product.isactive}
                     onChange={onInputChange}
                     errors={fieldErrors['isactive']}
                 />

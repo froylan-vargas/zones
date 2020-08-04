@@ -1,20 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import { setEditOptions, setShowEditWindow } from '../../../redux/product/product.actions'
+import { setEditOptions } from '../../../redux/product/product.actions'
 
 import { selectFirstImage } from '../../../utils/images.utils'
 import constants from '../../../utils/constants.utils'
 
 import Button from '../../elements/button/button.component'
 
-const onEditClick = (setShowEditWindow, setEditOptions, product, type) => {
-    const editOptions = { type, product }
-    setShowEditWindow(true);
+const onEditClick = (setEditOptions, product, type, method='') => {
+    const editOptions = { type, product, showEditWindow: true, method }
     setEditOptions(editOptions);
 }
 
-const ProductAdmin = ({ product, setShowEditWindow, setEditOptions }) => {
+const ProductAdmin = ({ product, setEditOptions }) => {
     const { id, name, price, isactive, images } = product;
     const image = images ? selectFirstImage(images) : null;
     return (
@@ -42,8 +41,8 @@ const ProductAdmin = ({ product, setShowEditWindow, setEditOptions }) => {
                         <span className='product-admin__value'>{images}</span>
                     </div>
                     <div className='product-admin__options'>
-                        <Button onClick={() => { onEditClick(setShowEditWindow, setEditOptions, product, constants.EDIT_PRODUCT) }}>Editar</Button>
-                        <Button onClick={() => { onEditClick(setShowEditWindow, setEditOptions, product, constants.EDIT_IMAGES) }}>Images</Button>
+                        <Button onClick={() => { onEditClick(setEditOptions, product, constants.EDIT_PRODUCT, 'edit') }}>Editar</Button>
+                        <Button onClick={() => { onEditClick(setEditOptions, product, constants.EDIT_IMAGES) }}>Images</Button>
                     </div>
                 </div>
                 <div className='product-admin__box--right'>
@@ -55,7 +54,6 @@ const ProductAdmin = ({ product, setShowEditWindow, setEditOptions }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setShowEditWindow: (showEditWindow) => dispatch(setShowEditWindow(showEditWindow)),
     setEditOptions: (selectedProduct) => dispatch(setEditOptions(selectedProduct))
 })
 

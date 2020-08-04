@@ -1,9 +1,11 @@
 import CategoryActionTypes from './category.types'
+import CatgoryActionTypes from './category.types'
 
 const INITIAL_STATE = {
     categories: null,
     isFetching: false,
-    errorMessage: undefined
+    errorMessage: undefined,
+    selectedCategory: "0"
 }
 
 const categoryReducer = (state = INITIAL_STATE, action) => {
@@ -24,6 +26,11 @@ const categoryReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 isFetching: false,
                 errorMessage: action.payload
+            }
+        case CatgoryActionTypes.SET_SELECTED_CATEGORY:
+            return {
+                ...state,
+                selectedCategory: action.payload
             }
         default:
             return state;

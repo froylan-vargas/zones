@@ -1,5 +1,5 @@
 const { readUploadTemplate } = require('../utils/excel-reader');
-const { _getProductsByCategoryId, batchUpload } = require('../controllers/product.controller');
+const { getProductsByCategoryId, batchUpload } = require('../models/product.model');
 const { preTransformCurrentProducts } = require('../models/product.model');
 const { transformArrayToObject } = require('../utils/array');
 const keys = require('../config/keys');
@@ -28,15 +28,14 @@ const handleExcelUpload = async (req, res) => {
         file.on('end', async function () {
             var buffer = Buffer.concat(buffers);
             const excelData = await readUploadTemplate(buffer);
-            console.log(excelData);
-            const currentProducts = await _getProductsByCategoryId(categoryId);
+            const currentProducts = await getProductsByCategoryId(categoryId);
             const preTransformedCurrentProducts = preTransformCurrentProducts(currentProducts);
             const transformed = transformArrayToObject(preTransformedCurrentProducts, 'name');
             await batchUpload(excelData, transformed, categoryId);
             res.send("Upload succees");
         });
     } catch (err) {
-        res.status(400).json(err)
+        res.json(err).status(400);
     }
 }
 

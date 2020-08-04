@@ -57,9 +57,65 @@ const createTemplateData = transformedProducts => {
     return templateData;
 }
 
+const getProducts = async () => {
+    try {
+        return await Product.findAll({})
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const getProductsByCategoryId = async (categoryid) => {
+    try {
+        const products = await Product.findAll({
+            where: {
+                categoryid
+            }
+        })
+        return products
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const createProduct = async (product, transaction) => {
+    return Product.create(product, {
+        fields: ['categoryid', 'name', 'price', 'images', 'createdon', 'modifiedon', 'isactive'],
+        transaction
+    })
+}
+
+const batchUpload = async (productsToUpload, availableProducts, categoryId) => {
+    try {
+        await sequelize.transaction(async (t) => {
+            const promises = [];
+            productsToUpload.forEach(async productToUpload => {
+                productToUpload.categoryid = categoryId;
+                const availableProduct = availableProducts[productToUpload.name.toLowerCase()];
+                let promise = null;
+                if (!availableProduct) {
+                    promise = createProduct(productToUpload, t);
+                } else {
+                    productToUpload.modifiedon = new Date(Date.now());
+                    promise = Product.update(productToUpload, {
+                        where: { id: availableProduct.id },
+                    }, { transaction: t })
+                }
+                promises.push(promise);
+            });
+            return Promise.all(promises)
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     Product,
     preTransformCurrentProducts,
     productsToTemplateFormat,
-    createTemplateData
+    createTemplateData,
+    batchUpload,
+    getProductsByCategoryId, 
+    getProducts
 }
