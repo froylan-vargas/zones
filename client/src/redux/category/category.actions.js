@@ -13,3 +13,8 @@ export const fetchCategoriesFailure = errorMessage => ({
     type: CategoryActionTypes.FETCH_CATEGORIES_FAILURE,
     payload: errorMessage
 })
+
+export const setSelectedCategory = selectedCategory => ({
+    type: CategoryActionTypes.SET_SELECTED_CATEGORY,
+    payload: selectedCategory
+})

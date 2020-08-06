@@ -12,6 +12,31 @@ const productValidators = {
             errors.push('Precio debe de ser mayor a 0');
         } else if (!inputValidators.onlyTwoDecimals(value)) errors.push('Precio puede tener solo 2 decimales');
         return errors;
+    },
+    validateCategory: (value) => {
+        const errors = [];
+        const number = parseInt(value);
+        if (!inputValidators.greaterThanZero(number)) {
+            errors.push('Se debe seleccionar una categoría');
+        }
+        return errors;
+    },
+    validateDescription: (value) => {
+        const errors = [];
+        if (!inputValidators.HasValue(value)) errors.push('Ingresa la descripción del producto');
+        return errors;
+    },
+    validatePriority: (value) => {
+        const errors = [];
+        if (!inputValidators.isNumber(value)) {
+            errors.push('La prioridad debe ser un número');
+        }
+        return errors;
+    },
+    validateFile: (file) => {
+        const errors = [];
+        if (!inputValidators.HasValue(file)) errors.push('Selecciona un archivo');
+        return errors;
     }
 }
 

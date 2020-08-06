@@ -1,4 +1,5 @@
 import React from 'react'
+import FormError from '../form-error/form-error.component'
 
 const FormGroup = ({
     name,
@@ -24,8 +25,7 @@ const FormGroup = ({
                 checked={defaultValue}
             />
             {
-                errors.length ? <div style={{ backgroundColor: 'blue' }}>{errors[0]}</div>
-                    : <div style={{ backgroundColor: 'green' }}>No hay error</div>
+                errors.length ? <FormError errors={errors} /> : null
             }
         </div>
     )

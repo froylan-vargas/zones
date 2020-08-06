@@ -1,6 +1,5 @@
 .button {
     text-decoration: none;
-    padding: 0.5rem;
     display: inline-block;
     transition: all 0.4s; //The transition is in the initial state
     position: relative;
@@ -9,7 +8,8 @@
     border: none;
     cursor: pointer;
     font-family: inherit;
-    width: 8rem;
+    width: 10rem;
+    height: 5.2rem;
 
     &:not(:last-child){
         margin-right: 3rem;
