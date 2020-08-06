@@ -9,8 +9,7 @@ import { fetchCategoriesStart } from '../../redux/category/category.actions';
 
 import ProductModify from '../../components/product/product-modify/product.modify.component';
 import ImagesEdit from '../../components/images-edit/images-edit.component';
-import ProductBulkOptions from '../../components/product/product-bulk-options/product-bulk-options.component';
-import Button from '../../components/elements/button/button.component';
+import ProductOptions from '../../components/product/product-options/product-options.component';
 import ProductAdminList from '../../components/product/product-admin-list/product-admin-list.component';
 import EditWindow from '../../components/edit-window/edit-window.component';
 import ProductUpload from '../../components/product/product-upload/product-upload.component';
@@ -22,22 +21,6 @@ class AdminProductsPage extends Component {
         const { fetchProductsStart, fetchCategoriesStart } = this.props;
         fetchProductsStart();
         fetchCategoriesStart();
-    }
-
-    onCreateClick = (setEditOptions) => {
-        const product = {
-            id: '0',
-            isactive: true,
-            name: '',
-            price: undefined
-        }
-
-        setEditOptions({
-            type: constants.CREATE_PRODUCT,
-            product,
-            method: 'create',
-            showEditWindow: true
-        });
     }
 
     switchEditType = (editOptions) => {
@@ -58,11 +41,10 @@ class AdminProductsPage extends Component {
     }
 
     render() {
-        const { setEditOptions, products, isFetchingProducts, editOptions } = this.props;
+        const { products, isFetchingProducts, editOptions } = this.props;
         return (
             <div className='admin-products-page'>
-                <ProductBulkOptions categoryId={'1'} />
-                <Button onClick={() => { this.onCreateClick(setEditOptions) }}>Add Product</Button>
+                <ProductOptions />
                 <ProductAdminList products={products} isFetchingProducts={isFetchingProducts} />
                 {
                     editOptions && editOptions.showEditWindow

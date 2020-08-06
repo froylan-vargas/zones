@@ -16,8 +16,20 @@ const productValidators = {
     validateCategory: (value) => {
         const errors = [];
         const number = parseInt(value);
-        if(!inputValidators.greaterThanZero(number)){
+        if (!inputValidators.greaterThanZero(number)) {
             errors.push('Se debe seleccionar una categoría');
+        }
+        return errors;
+    },
+    validateDescription: (value) => {
+        const errors = [];
+        if (!inputValidators.HasValue(value)) errors.push('Ingresa la descripción del producto');
+        return errors;
+    },
+    validatePriority: (value) => {
+        const errors = [];
+        if (!inputValidators.isNumber(value)) {
+            errors.push('La prioridad debe ser un número');
         }
         return errors;
     },

@@ -13,9 +13,25 @@ const ResultNotification = ({ message, isError, setNotification }) => {
         })
     }
 
+    const renderMessage = (result) => {
+        if (Array.isArray(result)) {
+            return <ul>
+                {
+                    result.map((line, i) => {
+                        return <li key={`line-${i}`}><span>{line}</span></li>
+                    })
+                }
+            </ul>
+        } else {
+            return <span>{result}</span>
+        }
+    }
+
     return (
         <div className={`result-notification ${isError ? 'error' : ''}`}>
-            {message}
+            {
+                renderMessage(message)
+            }
             <span onClick={onClose} className='result-notification__close'>X</span>
         </div>
     )

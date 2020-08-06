@@ -17,12 +17,28 @@ const ProductEdit = ({ product, onSave, onInputChange, fieldErrors }) => {
                     errors={fieldErrors['name']}
                 />
                 <FormGroup
+                    name='description'
+                    labelValue='Descripción'
+                    inputType='text'
+                    defaultValue={product.description}
+                    onChange={onInputChange}
+                    errors={fieldErrors['description']}
+                />
+                <FormGroup
                     name='price'
                     labelValue='Precio'
                     inputType='number'
                     defaultValue={product.price}
                     onChange={onInputChange}
                     errors={fieldErrors['price']}
+                />
+                <FormGroup
+                    name='priority'
+                    labelValue='Prioridad'
+                    inputType='number'
+                    defaultValue={product.priority}
+                    onChange={onInputChange}
+                    errors={fieldErrors['priority']}
                 />
                 <FormGroup
                     name='isactive'

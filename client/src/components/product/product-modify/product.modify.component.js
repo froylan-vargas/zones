@@ -8,6 +8,7 @@ import { setResultNotification } from '../../../redux/notification/notification.
 import productValidators from '../../../utils/validators/product-validators.utils';
 import { selectSelectedCategory } from '../../../redux/category/category.selectors';
 import { setSelectedCategory } from '../../../redux/category/category.actions';
+import notificationUtils from '../../../utils/notification.utils';
 
 import EditProduct from '../product-edit/product-edit.component'
 import CreateProduct from '../product-create/product-create.component'
@@ -21,15 +22,19 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
         id: product.id,
         categoryid: product.categoryid,
         name: product.name,
+        description: product.description,
         price: product.price,
+        priority: product.priority,
         isactive: product.isactive
     });
 
     const [fieldErrors, setFieldError] = useState({
         name: [],
+        description: [],
         price: [],
+        priority: [],
         isactive: [],
-        categoryid: []
+        optionId: []
     })
 
     const onInputChange = (event) => {
@@ -48,16 +53,23 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
                 return setFieldError({ ...fieldErrors, [name]: productValidators.validateProductName(value) });
             case 'price':
                 return setFieldError({ ...fieldErrors, [name]: productValidators.validatePrice(value) });
+            case 'description':
+                return setFieldError({ ...fieldErrors, [name]: productValidators.validateDescription(value) });
+            case 'priority':
+                return setFieldError({ ...fieldErrors, [name]: productValidators.validatePriority(value) });
             default:
                 break;
         }
     }
 
     const validateFullProduct = () => {
-        const nameErrors = productValidators.validateProductName(product.name);
-        const priceErrors = productValidators.validatePrice(product.price);
-        const categoryErrors = productValidators.validateCategory(product.categoryid);
-        return !nameErrors.length && !priceErrors.length && !categoryErrors.length;
+        const categoryid = method === 'create' ? selectedCategory : formProduct.categoryid
+        const nameErrors = productValidators.validateProductName(formProduct.name);
+        const priceErrors = productValidators.validatePrice(formProduct.price);
+        const categoryErrors = productValidators.validateCategory(categoryid);
+        const descriptionErrors = productValidators.validateDescription(formProduct.description);
+        const priorityErrors = productValidators.validatePriority(formProduct.priority);
+        return !nameErrors.length && !priceErrors.length && !categoryErrors.length && !descriptionErrors.length && !priorityErrors.length;
     }
 
     const saveProduct = async () => {
@@ -69,7 +81,9 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
             categoryid,
             isactive: formProduct.isactive,
             name: formProduct.name,
-            price: formProduct.price
+            price: formProduct.price,
+            description: formProduct.description,
+            priority: formProduct.priority
         }
 
         let result;
@@ -77,25 +91,13 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
         method === 'create' ? result = await axios.post('/api/product/create', body)
             : result = await axios.put('/api/product/update', body)
 
-        let notification;
 
-        if (result.data.error) {
-            notification = {
-                visible: true,
-                isError: true,
-                message: result.data.error
-            }
-        } else {
-            notification = {
-                visible: true,
-                isError: false,
-                message: 'El producto se ha guardado correctamente'
-            }
+        if (!result.data.error) {
             fetchProductsStart();
-            setEditOptions({ setShowEditWindow: false });
-            setSelectedCategory("0");
         }
-        setResultNotification(notification);
+        setEditOptions({ setShowEditWindow: false });
+        setSelectedCategory("0");
+        setResultNotification(notificationUtils.createNotification(result, 'El producto se guardo exitosamente'));
     }
 
     const onSave = (e) => {
@@ -104,16 +106,18 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
         else {
             setFieldError({
                 ...fieldErrors,
-                name: productValidators.validateProductName(product.name),
-                price: productValidators.validatePrice(product.price),
-                categoryid: productValidators.validateCategory(product.categoryid)
+                name: productValidators.validateProductName(formProduct.name),
+                price: productValidators.validatePrice(formProduct.price),
+                optionId: productValidators.validateCategory(selectedCategory),
+                description: productValidators.validateDescription(formProduct.description),
+                priority: productValidators.validatePriority(formProduct.priority)
             });
         }
     }
 
     return (
         method === 'create'
-            ? <CreateProduct onInputChange={onInputChange} onSave={onSave} product={formProduct} fieldErrors={fieldErrors} />
+            ? <CreateProduct onInputChange={onInputChange} onSave={onSave} product={formProduct} fieldErrors={fieldErrors} setFieldError={setFieldError} />
             : <EditProduct onInputChange={onInputChange} onSave={onSave} product={formProduct} fieldErrors={fieldErrors} />
     )
 }

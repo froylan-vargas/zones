@@ -1,6 +1,6 @@
 const { Product, getProductsByCategoryId, getProducts } = require('../models/product.model');
 const { sequelize } = require('../config/database');
-const validateProduct = require('../utils/serverValidators/product-validators.utils');
+const productValidator = require('../utils/serverValidators/product-validators.utils');
 
 const getAllProducts = async (req, res) => {
     try {
@@ -28,15 +28,14 @@ const getProductByCategoryId = async (req, res) => {
 
 const createProduct = async (req, res) => {
     const product = req.body;
-    const error = validateProduct(product);
-
-    if (error) {
-        return res.json({ error }).status(400);
+    const errors = productValidator.validateProduct(product);
+    if (errors.length) {
+        return res.json({ error: errors });
     }
 
     try {
         const newProduct = await Product.create(product, {
-            fields: ['categoryid', 'name', 'price', 'images', 'createdon', 'modifiedon', 'isactive']
+            fields: ['categoryid', 'name', 'description', 'price', 'images', 'createdon', 'modifiedon', 'isactive']
         })
 
         res.send(newProduct);
@@ -51,12 +50,15 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const product = req.body;
-    const error = validateProduct(product);
-    product.modifiedon = new Date(Date.now());
-    if (error) {
-        return res.json({ error }).status(400);
+    console.log(product);
+    const errors = productValidator.validateProduct(product);
+    
+    if (errors.length) {
+        return res.json({ error: errors });
     }
+
     try {
+        product.modifiedon = new Date(Date.now());
         const updatedProduct = await Product.update(product, {
             where: { id: product.id }
         })

@@ -9,6 +9,11 @@ const Product = sequelize.define('product', {
     },
     categoryid: { type: Sequelize.INTEGER },
     name: { type: Sequelize.TEXT },
+    description: { type: Sequelize.TEXT },
+    priority: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+    },
     price: { type: Sequelize.NUMBER },
     images: { type: Sequelize.TEXT },
     createdon: {
@@ -41,7 +46,7 @@ const productsToTemplateFormat = currentProducts => {
         return {
             name: product.name,
             price: product.price,
-            images: product.images,
+            description: product.description,
             isActive: product.isactive
         }
     });
@@ -49,7 +54,7 @@ const productsToTemplateFormat = currentProducts => {
 
 const createTemplateData = transformedProducts => {
     let templateData = [
-        ['name', 'price', 'images', 'isactive']
+        ['name', 'price', 'description', 'isactive']
     ]
     transformedProducts.forEach(transformedProduct => {
         templateData.push(Object.values(transformedProduct));
@@ -59,7 +64,12 @@ const createTemplateData = transformedProducts => {
 
 const getProducts = async () => {
     try {
-        return await Product.findAll({})
+        return await Product.findAll({
+            order: [
+                ['isactive', 'DESC'],
+                ['priority', 'DESC']
+            ]
+        });
     } catch (err) {
         console.log(err);
     }
@@ -79,8 +89,9 @@ const getProductsByCategoryId = async (categoryid) => {
 }
 
 const createProduct = async (product, transaction) => {
+    console.log(product);
     return Product.create(product, {
-        fields: ['categoryid', 'name', 'price', 'images', 'createdon', 'modifiedon', 'isactive'],
+        fields: ['categoryid', 'name', 'description', 'price', 'createdon', 'modifiedon', 'isactive'],
         transaction
     })
 }
@@ -106,7 +117,7 @@ const batchUpload = async (productsToUpload, availableProducts, categoryId) => {
             return Promise.all(promises)
         })
     } catch (err) {
-        console.log(err);
+        throw new Error(err);
     }
 }
 
@@ -116,6 +127,6 @@ module.exports = {
     productsToTemplateFormat,
     createTemplateData,
     batchUpload,
-    getProductsByCategoryId, 
+    getProductsByCategoryId,
     getProducts
 }

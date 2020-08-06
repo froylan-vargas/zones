@@ -4,17 +4,17 @@ import { createStructuredSelector } from 'reselect';
 import { selectCategories } from '../../redux/category/category.selectors';
 import { setSelectedCategory } from '../../redux/category/category.actions';
 
-import WithCategories from '../with-categories/with-categories.component';
+import WithOptions from '../with-options/with-options.component';
 import Select from '../elements/select/select.component';
 
 const mapStateToProps = createStructuredSelector({
-    categories: selectCategories
+    options: selectCategories
 });
 
 const mapDispatchToProps = dispatch => ({
-    setSelectedCategory: (selectedCategory) => dispatch(setSelectedCategory(selectedCategory))
+    setSelectedValue: (selectedCategory) => dispatch(setSelectedCategory(selectedCategory))
 });
 
-const CategoriesSelectContainer = connect(mapStateToProps, mapDispatchToProps)(WithCategories(Select));
+const CategoriesSelectContainer = (connect(mapStateToProps, mapDispatchToProps)(WithOptions(Select)));
 
 export default CategoriesSelectContainer;
