@@ -1,0 +1,28 @@
+.upload-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+    //Initial
+    & + label {
+        margin-top: 2rem;
+        font-size: 1.25em;
+        font-weight: 700;
+        color: white;
+        background-color: $color-primary-light;
+        color: $color-tertiary;
+        display: inline-block;
+        cursor: pointer;
+        text-align: center;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+    }
+
+    //hover
+    & + label:hover {
+        background-color: $color-explosion;
+    }
+}

@@ -38,7 +38,8 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
     })
 
     const onInputChange = (event) => {
-        if (event.target.name === 'isactive') {
+        if (event.target.name === 'isChecked') {
+            console.log(event.target);
             setProductProperties({ ...formProduct, isactive: event.target.checked })
         } else {
             const { name, value } = event.target

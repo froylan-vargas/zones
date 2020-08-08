@@ -1,17 +1,23 @@
 .result-notification {
-    background-color: green;
-    opacity: 0.5;
-    height: auto;
-    margin: 1rem 2rem;
-    padding: 2rem;
-    border-radius: 20rem;
-    color: white;
-    font-weight: 700;
+    background-image: linear-gradient(to right bottom, $color-success-dark, $color-success-light);
+    opacity: .9;
+    margin-top: 1rem;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    color: $color-white;
+    font-weight: 800;
     font-size: 2rem;
-    position: relative;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
 
     &.error{
-        background-color: blue;
+        background-image: linear-gradient(to right bottom, $color-error-light, $color-error-dark);
+        text-decoration: none;
+    }
+
+    &__element{
+        list-style-type: none;
     }
     
     &__close {

@@ -1,0 +1,9 @@
+.admin-main-page{
+    &__menu{
+        background-image: linear-gradient(to right bottom, $color-primary-dark, $color-primary-light);
+    }
+
+    &__content{
+        margin: 2rem;
+    }
+}

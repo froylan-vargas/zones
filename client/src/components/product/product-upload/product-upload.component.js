@@ -12,12 +12,12 @@ import notificationUtils from '../../../utils/notification.utils';
 import constants from '../../../utils/constants.utils';
 
 import CategoriesContainer from '../../categories-select-container/categories-select-container.component';
-import FormError from '../../elements/form-error/form-error.component';
 import Button from '../../elements/button/button.component';
+import UploadFile from '../../elements/upload-file/upload-file.component';
 
 const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCategory, setEditOptions }) => {
 
-    const [file, setFile] = useState(undefined);
+    const [file, setFile] = useState({});
     const [fieldErrors, setFieldError] = useState({
         file: [],
         optionId: []
@@ -25,7 +25,7 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
 
     const validateUpload = () => {
         return !productValidators.validateCategory(categoryid).length
-            && file
+            && file.name
     }
 
     const onSelectFile = event => {
@@ -40,14 +40,14 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
 
     const uploadFile = async () => {
         const data = new FormData();
+        console.log(file);
         data.append('file', file)
         const fileResult = await axios.post(`/api/upload/products/${categoryid}`, data);
-        console.log(fileResult);
         if (!fileResult.data.error) {
             fetchProductsStart();
         }
         setNotification(notificationUtils.createNotification(fileResult, 'Los productos se guardaron exitosamente.'));
-        setCategory(categoryid);
+        setCategory(0);
         setEditOptions({ setShowEditWindow: false });
     }
 
@@ -68,11 +68,11 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
             <form method="post">
                 <div className="form-group">
                     <CategoriesContainer fieldErrors={fieldErrors} setFieldError={setFieldError} label={constants.CATEGORY_LABEL} />
-                    <label>Upload Your File</label>
-                    <input type="file" className="form-control" onChange={onSelectFile} />
-                    <FormError errors={fieldErrors['file']} />
+                    <UploadFile accept={constants.EXCEL_TYPES} value={file.name} fieldErrors={fieldErrors} onSelectFile={onSelectFile} />
                 </div>
-                <Button onClick={onFileUpload}>Upload Products</Button>
+                <div className="product-upload__options">
+                    <Button modifier='white' onClick={onFileUpload}>Subir productos</Button>
+                </div>
             </form>
         </div>
     )

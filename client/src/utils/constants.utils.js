@@ -6,7 +6,9 @@ const constants = {
     DOWNLOAD_PRODUCT : 'DOWNLOAD_PRODUCT',
     IMAGES_UPLOAD: 'IMAGES_UPLOAD',
     MISSING_INFORMATION: 'LA INFORMACIÓN PROPORCIONADA ESTA INCOMPLETA',
-    CATEGORY_LABEL: 'Categoría:'
+    CATEGORY_LABEL: 'Categoría:',
+    EXCEL_TYPES: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
+    DESCRIPTION_MAX_CHARS: 82
 } 
 
 export default constants;

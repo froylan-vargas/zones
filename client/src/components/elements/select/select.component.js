@@ -2,11 +2,9 @@ import React from 'react'
 
 const Select = ({ children, ...otherProps }) => {
     return (
-        <div className="select">
-            <select  {...otherProps}>
-                {children}
-            </select>
-        </div>
+        <select className="form-group__input"  {...otherProps}>
+            {children}
+        </select>
     )
 }
 
