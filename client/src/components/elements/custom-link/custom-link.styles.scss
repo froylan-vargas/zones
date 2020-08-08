@@ -1,0 +1,24 @@
+.custom-link {
+    display: inline;
+    padding-left: 1rem;
+    text-decoration: none !important;
+    padding-left: 2rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: $color-white;
+
+    &:hover{
+        color: $color-primary-light;
+        text-transform: uppercase;
+    }
+
+    &:not(:last-child) {
+        margin-right: 2rem;
+    }
+
+    &:not(:first-child) {
+        border-left: solid $color-primary-light 2px;
+    }
+
+    
+}

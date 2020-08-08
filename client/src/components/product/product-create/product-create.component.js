@@ -4,7 +4,8 @@ import constants from '../../../utils/constants.utils';
 
 import FormGroup from '../../elements/form-group/form-group.component';
 import Button from '../../elements/button/button.component';
-import CategoriesSelectContainer from '../../categories-select-container/categories-select-container.component'
+import CategoriesSelectContainer from '../../categories-select-container/categories-select-container.component';
+import TextArea from '../../elements/text-area/text-area.comoponent';
 
 const CreateProduct = ({ onSave, onInputChange, fieldErrors, setFieldError }) => {
     return (
@@ -19,7 +20,7 @@ const CreateProduct = ({ onSave, onInputChange, fieldErrors, setFieldError }) =>
                     errors={fieldErrors['name']}
                     placeholder={'Nombre del produto'}
                 />
-                <FormGroup
+                <TextArea
                     name='description'
                     labelValue='Descripción'
                     inputType='text'
@@ -36,7 +37,7 @@ const CreateProduct = ({ onSave, onInputChange, fieldErrors, setFieldError }) =>
                     placeholder={'0.00'}
                 />
                 <div className='form__options'>
-                    <Button onClick={onSave}>Save</Button>
+                    <Button modifier={'white'} onClick={onSave}>Save</Button>
                 </div>
             </form>
         </div>

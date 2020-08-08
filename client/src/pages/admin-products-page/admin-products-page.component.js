@@ -44,17 +44,17 @@ class AdminProductsPage extends Component {
         const { products, isFetchingProducts, editOptions } = this.props;
         return (
             <div className='admin-products-page'>
-                <ProductOptions />
-                <ProductAdminList products={products} isFetchingProducts={isFetchingProducts} />
                 {
                     editOptions && editOptions.showEditWindow
-                        ? <EditWindow>
+                        ? <EditWindow purpose={editOptions.purpose}>
                             {
                                 this.switchEditType(editOptions)
                             }
                         </EditWindow>
                         : null
                 }
+                <ProductOptions />
+                <ProductAdminList products={products} isFetchingProducts={isFetchingProducts} />
             </div>
         )
     }

@@ -1,0 +1,30 @@
+.form-group {
+    &__label {
+        color: $color-secondary;
+        font-weight: 800;
+        font-size: 2rem;
+        display: block;
+    }
+
+    &__input {
+        font-family: "EB Garamond", serif;
+        display: block;
+        width: 40rem;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: $color-explosion;
+        background-color: $color-primary-dark;
+        border: 2px solid $color-primary-light;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0 1rem 1rem rgba($color-black, 0.8);
+
+        &:focus {
+            border: none;
+        }
+    }
+}
+
+.form__options {
+    margin-top: 3rem;
+}

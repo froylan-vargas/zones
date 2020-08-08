@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { setEditOptions } from '../../redux/product/product.actions';
 import { setSelectedCategory } from '../../redux/category/category.actions';
 
-const EditWindow = ({ children, setEditOptions, setSelectedCategory }) => {
-    
+const EditWindow = ({ children, setEditOptions, setSelectedCategory, purpose }) => {
+
     const onClose = () => {
         setEditOptions({ showEditWindow: false });
         setSelectedCategory("0");
@@ -13,8 +13,13 @@ const EditWindow = ({ children, setEditOptions, setSelectedCategory }) => {
 
     return (
         <div className="edit-window">
-            <span onClick={onClose} className='edit-window__close'>X</span>
-            {children}
+            <div className="edit-window__content">
+                <div className="edit-window__purpose">
+                    {purpose}
+                </div>
+                <span onClick={onClose} className='edit-window__close'>X</span>
+                {children}
+            </div>
         </div>
     )
 }

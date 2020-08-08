@@ -1,10 +1,34 @@
-.edit-window{
-    background-color: red;
-    height: 200px;
-    width: 200px;
-    position: relative;
+.edit-window {
+    height: 100vh;
+    width: 100%;
+    @include absCenter;
+    position: fixed;
+    z-index: 1000;
+    background-color: rgba($color-black, 0.8);
+    padding-bottom: 100rem;
 
-    &__close{
+    &__content {
+        padding: 2rem;
+        @include absCenter;
+        width: 60%;
+        height: auto;
+        background-color: $color-primary-dark;
+        opacity: 0.8;
+        box-shadow: 0 2rem 4rem rgba($color-primary-light, 0.8);
+        border-radius: 3px;
+        color: $color-white;
+        border-radius: 1.5rem;
+        border-bottom-right-radius: 15rem;
+    }
+
+    &__purpose {
+        color: $color-primary-light;
+        text-align: center;
+        margin: 1rem 0;
+        font-size: 3rem;
+    }
+
+    &__close {
         color: white;
         position: absolute;
         top: 1rem;

@@ -18,7 +18,7 @@ const WithOptions = WrappedComponent => ({ options, setSelectedValue, fieldError
     }
 
     return (
-        <div>
+        <div className="form-group">
             <label className='form-group__label' htmlFor={label}>{label}</label>
             <WrappedComponent name={label} onChange={onOptionChange}>
                 {
@@ -26,7 +26,7 @@ const WithOptions = WrappedComponent => ({ options, setSelectedValue, fieldError
                 }
             </WrappedComponent>
             {
-                fieldErrors['optionId'] ? <FormError errors={fieldErrors['optionId']} /> : null
+                fieldErrors['optionId'].length ? <FormError errors={fieldErrors['optionId']} /> : null
             }
 
         </div>

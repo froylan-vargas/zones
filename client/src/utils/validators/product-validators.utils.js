@@ -35,7 +35,7 @@ const productValidators = {
     },
     validateFile: (file) => {
         const errors = [];
-        if (!inputValidators.HasValue(file)) errors.push('Selecciona un archivo');
+        if (!file.name) errors.push('Selecciona un archivo');
         return errors;
     }
 }

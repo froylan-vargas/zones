@@ -25,20 +25,26 @@ const ProductOptions = ({ setEditOptions, setCategory }) => {
                     type,
                     product,
                     method: 'create',
-                    showEditWindow: true
+                    showEditWindow: true,
+                    purpose: 'Nuevo Producto'
                 }
             case constants.UPLOAD_PRODUCT:
                 return {
                     type,
-                    showEditWindow: true
+                    showEditWindow: true,
+                    purpose: 'Subir Productos'
                 }
             case constants.DOWNLOAD_PRODUCT:
                 return {
                     type,
-                    showEditWindow: true
+                    showEditWindow: true,
+                    purpose: 'Descargar Productos'
                 }
             case constants.IMAGES_UPLOAD:
-                return {}
+                return {
+                    showEditWindow: true,
+                    purpose: 'Subir Imágenes'
+                }
             default:
                 return {}
         }
@@ -51,10 +57,10 @@ const ProductOptions = ({ setEditOptions, setCategory }) => {
 
     return (
         <div className='product-options'>
-            <Button modifier={'white'} onClick={() => buttonClick(constants.UPLOAD_PRODUCT)}>Upload products</Button>
-            <Button modifier={'white'} onClick={() => buttonClick(constants.DOWNLOAD_PRODUCT)}>Download</Button>
-            <Button modifier={'white'} onClick={() => buttonClick(constants.IMAGES_UPLOAD)}>Upload Images</Button>
-            <Button modifier={'white'} onClick={() => buttonClick(constants.CREATE_PRODUCT)}>Add Product</Button>
+            <Button modifier={'white desktop'} onClick={() => buttonClick(constants.UPLOAD_PRODUCT)}>Subir</Button>
+            <Button modifier={'white desktop'} onClick={() => buttonClick(constants.DOWNLOAD_PRODUCT)}>Descargar</Button>
+            <Button modifier={'white desktop'} onClick={() => buttonClick(constants.IMAGES_UPLOAD)}>Subir imagenes</Button>
+            <Button modifier={'white'} onClick={() => buttonClick(constants.CREATE_PRODUCT)}>Agregar</Button>
         </div>
     )
 }

@@ -18,7 +18,7 @@ const ResultNotification = ({ message, isError, setNotification }) => {
             return <ul>
                 {
                     result.map((line, i) => {
-                        return <li key={`line-${i}`}><span>{line}</span></li>
+                        return <li className="result-notification__element" key={`line-${i}`}><span>{line}</span></li>
                     })
                 }
             </ul>

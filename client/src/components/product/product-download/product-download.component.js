@@ -41,7 +41,7 @@ const DownloadProduct = ({ categoryId, setNotification, setCategory, setEditOpti
                 reader.readAsText(resBlob)
             })
             resData = JSON.parse(resText)
-        } catch (err) {}
+        } catch (err) { }
 
         if (resData) {
             console.log('resData', resData)
@@ -69,11 +69,13 @@ const DownloadProduct = ({ categoryId, setNotification, setCategory, setEditOpti
     }
 
     return (
-        <div className='download-product'>
+        <div className='product-download'>
             <div className="form-group">
                 <CategoriesContainer fieldErrors={fieldErrors} setFieldError={setFieldError} label={constants.CATEGORY_LABEL} />
             </div>
-            <Button onClick={onFileDownload}>Exportar productos</Button>
+            <div className='product-download__options'>
+                <Button modifier='white' onClick={onFileDownload}>Descargar Productos</Button>
+            </div>
         </div>
     )
 }

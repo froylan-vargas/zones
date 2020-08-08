@@ -1,7 +1,9 @@
 import React from 'react';
 
-import Button from '../../elements/button/button.component'
-import FormGroup from '../../elements/form-group/form-group.component'
+import Button from '../../elements/button/button.component';
+import FormGroup from '../../elements/form-group/form-group.component';
+import TextArea from '../../elements/text-area/text-area.comoponent';
+import FormSwitch from '../../elements/form-switch/form-switch.component';
 
 const ProductEdit = ({ product, onSave, onInputChange, fieldErrors }) => {
 
@@ -16,10 +18,9 @@ const ProductEdit = ({ product, onSave, onInputChange, fieldErrors }) => {
                     onChange={onInputChange}
                     errors={fieldErrors['name']}
                 />
-                <FormGroup
+                <TextArea
                     name='description'
                     labelValue='Descripción'
-                    inputType='text'
                     defaultValue={product.description}
                     onChange={onInputChange}
                     errors={fieldErrors['description']}
@@ -40,16 +41,14 @@ const ProductEdit = ({ product, onSave, onInputChange, fieldErrors }) => {
                     onChange={onInputChange}
                     errors={fieldErrors['priority']}
                 />
-                <FormGroup
-                    name='isactive'
-                    labelValue='Estatus'
-                    inputType='checkbox'
-                    defaultValue={product.isactive}
+                <FormSwitch
+                    label='Estatus'
                     onChange={onInputChange}
-                    errors={fieldErrors['isactive']}
+                    checked={product.isactive}
                 />
+
                 <div className='form__options'>
-                    <Button onClick={onSave}>Save</Button>
+                    <Button modifier="white" onClick={onSave}>Guardar</Button>
                 </div>
             </form>
         </div>
