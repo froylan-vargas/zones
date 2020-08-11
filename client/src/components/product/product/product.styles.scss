@@ -1,9 +1,9 @@
 .product {
-    width: 100%;
+    width: 28rem;
 
     &__top {
         height: 28rem;
-        width: 100%;
+        width: 28rem;
         border-top-left-radius: 1.2rem;
         border-top-right-radius: 1.2rem;
         overflow: hidden;
@@ -13,14 +13,14 @@
 
     &__image {
         height: 28rem;
-        width: 100%;
+        width: 28rem;
     }
 
     &__bottom {
         background-image: linear-gradient(to right bottom, $color-primary-dark, $color-primary-light);
         border-bottom-right-radius: 11rem;
         display: inline-block;
-        width: 100%;
+        width: 28rem;
         height: 13rem;
         box-shadow: 0 1rem 2rem rgba($color-black, 0.8);
         font-size: 3.2rem;
