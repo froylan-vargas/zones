@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
 
+import {readExcelFile} from '../../../utils/excel-reader.utils';
 import productValidators from '../../../utils/validators/product-validators.utils';
 import { fetchProductsStart, setEditOptions } from '../../../redux/product/product.actions';
 import { setResultNotification } from '../../../redux/notification/notification.actions';
@@ -39,16 +40,18 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
     }
 
     const uploadFile = async () => {
-        const data = new FormData();
-        console.log(file);
-        data.append('file', file)
-        const fileResult = await axios.post(`/api/upload/products/${categoryid}`, data);
-        if (!fileResult.data.error) {
-            fetchProductsStart();
-        }
-        setNotification(notificationUtils.createNotification(fileResult, 'Los productos se guardaron exitosamente.'));
-        setCategory(0);
-        setEditOptions({ setShowEditWindow: false });
+        var reader = new FileReader();
+        reader.onload = async function (e) {
+            const excelData = readExcelFile(new Uint8Array(e.target.result));
+            const fileResult = await axios.post(`/api/upload/products/${categoryid}`, { data: excelData });
+            if (!fileResult.data.error) {
+                fetchProductsStart();
+            }
+            setNotification(notificationUtils.createNotification(fileResult, 'Los productos se guardaron exitosamente.'));
+            setCategory("0");
+            setEditOptions({ setShowEditWindow: false });
+        };
+        reader.readAsArrayBuffer(file);
     }
 
     const onFileUpload = async (event) => {
