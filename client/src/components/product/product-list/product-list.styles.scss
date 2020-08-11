@@ -1,7 +1,8 @@
 .product-list{
+    @include horizontalCenter;
     background-color: $color-white;
     padding: 5rem;
-    height: 700px;
+    
 
     &__product-box{
         margin: 3rem;
