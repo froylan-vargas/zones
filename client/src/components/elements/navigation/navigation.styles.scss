@@ -1,0 +1,53 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    height: 7rem;
+    position: relative;
+
+    &--left {
+        height: 100%;
+        width: 7rem;
+        padding: 0.5rem;
+    }
+
+    &--right {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: 0.5rem;
+    }
+
+    &__shape {
+        height: 6rem;
+        width: 6rem;
+        display: inline-block;
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+        background-color: $color-black;
+        opacity: 0.7;
+        color: $color-explosion;
+        cursor: pointer;
+        position: relative;
+
+        &__caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 0.2rem;
+        }
+    }
+
+    &__user-menu{
+        background-color: green;
+        position: absolute;
+        top: 5.5rem;
+        //visibility: hidden;
+    }
+}

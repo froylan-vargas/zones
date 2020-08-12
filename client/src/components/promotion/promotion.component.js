@@ -1,8 +1,6 @@
 import React from 'react'
 
 import Button from '../elements/button/button.component'
-//import { ReactComponent as PromotionImage } from '../../assets/img/promo-flower.png'
-
 
 const Promotion = () => {
     return (

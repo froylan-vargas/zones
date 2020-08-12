@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-import Promotion from '../../promotion/promotion.component'
-import Logo from '../../logo/logo.component'
+import Promotion from '../../promotion/promotion.component';
+import Navigation from '../../elements/navigation/navigation.component';
 
 const Header = () => {
     return (
         <div className="header">
-            <Logo />
+            <Navigation />
             <div className="header__promotions">
                 <Promotion />
             </div>
