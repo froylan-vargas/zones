@@ -1,0 +1,51 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    height: 7rem;
+    position: relative;
+
+    &--left {
+        height: 100%;
+        width: auto;
+        padding: 0.5rem;
+    }
+
+    &--right {
+        width: 70%;
+        padding-right: 7rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: 1rem;
+    }
+}
+
+.cart-icon {
+    margin-right: 1rem;
+    color: $color-explosion;
+    height: 6rem;
+    right: 2rem;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+
+    .shopping-icon {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .item-count {
+        position: absolute;
+        font-size: 2.2rem;
+        font-weight: 800;
+        bottom: 0.6rem;
+    }
+}
+
+path{
+    fill: $color-primary!important;
+}
+

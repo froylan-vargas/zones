@@ -27,7 +27,7 @@ const App = ({ notification }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-  notification : selectNotification
+  notification: selectNotification
 })
 
 export default connect(mapStateToProps)(App);
