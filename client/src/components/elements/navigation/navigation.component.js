@@ -12,7 +12,7 @@ const Navigation = () => {
                 <Logo/>
             </div>
             <div className="navigation--right">
-                {/* <CustomLink to={`/admin`}>Ingresar</CustomLink> */}
+                <CustomLink to={`/admin`}>Ingresar</CustomLink>
                 <ProfileIcon />
             </div>
             <div className="cart-icon">

@@ -42,6 +42,7 @@ const ProductOptions = ({ setEditOptions, setCategory }) => {
                 }
             case constants.IMAGES_UPLOAD:
                 return {
+                    type,
                     showEditWindow: true,
                     purpose: 'Subir Imágenes'
                 }

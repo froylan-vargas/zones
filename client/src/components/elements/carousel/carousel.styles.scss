@@ -1,0 +1,15 @@
+.carousel {
+    text-align: center;
+    &__item {
+        img{
+            width: auto;
+            height: 30rem;
+        }
+    }
+    &__caption {
+        color: $color-secondary;
+        text-transform: uppercase;
+        font-size: 2rem;
+        font-weight: 800;
+    }
+}
