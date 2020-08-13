@@ -7,8 +7,10 @@ const Header = () => {
     return (
         <div className="header">
             <Navigation />
-            <div className="header__promotions">
-                <Promotion />
+            <div className="promotion-wrapper">
+                <div className="promotions">
+                    <Promotion />
+                </div>
             </div>
         </div>
     )
