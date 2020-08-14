@@ -19,7 +19,6 @@ const handleExcelUpload = async (req, res) => {
     }, []);
 
     if (uploadErrors.length) {
-        console.log(uploadErrors);
         return res.send({ error: uploadErrors });
     }
 

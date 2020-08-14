@@ -8,6 +8,7 @@ const constants = {
     MISSING_INFORMATION: 'LA INFORMACIÓN PROPORCIONADA ESTA INCOMPLETA',
     CATEGORY_LABEL: 'Categoría:',
     EXCEL_TYPES: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
+    IMAGE_FILE_TYPES: 'image/jpeg, image/png',
     DESCRIPTION_MAX_CHARS: 82,
     DOWNLOAD_FILENAME: 'Productos.xlsx'
 } 

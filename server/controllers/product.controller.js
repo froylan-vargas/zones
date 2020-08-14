@@ -9,7 +9,6 @@ const getAllProducts = async (req, res) => {
             data: products
         });
     } catch (err) {
-        console.log(err);
         res.status(400).json(err);
     }
 }
@@ -50,7 +49,6 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const product = req.body;
-    console.log(product);
     const errors = productValidator.validateProduct(product);
     
     if (errors.length) {

@@ -71,7 +71,6 @@ const getProducts = async () => {
             ]
         });
     } catch (err) {
-        console.log(err);
     }
 }
 
@@ -84,12 +83,10 @@ const getProductsByCategoryId = async (categoryid) => {
         })
         return products
     } catch (err) {
-        console.log(err);
     }
 }
 
 const createProduct = async (product, transaction) => {
-    console.log(product);
     return Product.create(product, {
         fields: ['categoryid', 'name', 'description', 'price', 'createdon', 'modifiedon', 'isactive'],
         transaction

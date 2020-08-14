@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import axios from 'axios';
 
-import {readExcelFile} from '../../../utils/excel-reader.utils';
+import { readExcelFile } from '../../../utils/excel-reader.utils';
 import productValidators from '../../../utils/validators/product-validators.utils';
 import { fetchProductsStart, setEditOptions } from '../../../redux/product/product.actions';
 import { setResultNotification } from '../../../redux/notification/notification.actions';
@@ -27,16 +27,6 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
     const validateUpload = () => {
         return !productValidators.validateCategory(categoryid).length
             && file.name
-    }
-
-    const onSelectFile = event => {
-        if (event.target.files[0]) {
-            setFieldError({
-                ...fieldErrors,
-                file: []
-            });
-        }
-        setFile(event.target.files[0]);
     }
 
     const uploadFile = async () => {
@@ -71,7 +61,14 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
             <form method="post">
                 <div className="form-group">
                     <CategoriesContainer fieldErrors={fieldErrors} setFieldError={setFieldError} label={constants.CATEGORY_LABEL} />
-                    <UploadFile accept={constants.EXCEL_TYPES} value={file.name} fieldErrors={fieldErrors} onSelectFile={onSelectFile} />
+                    <UploadFile
+                        accept={constants.EXCEL_TYPES}
+                        value={file.name}
+                        fieldErrors={fieldErrors}
+                        setFile = {setFile}
+                        setFieldError = {setFieldError}
+                        label = {'Seleccione un archivo'}
+                    />
                 </div>
                 <div className="product-upload__options">
                     <Button modifier='white' onClick={onFileUpload}>Subir productos</Button>

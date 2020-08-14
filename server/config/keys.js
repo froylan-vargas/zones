@@ -5,7 +5,5 @@ module.exports = {
     PGDATABASE:process.env.PG_DATABASE,
     PGPASSWORD:process.env.PG_PASSWORD,
     PGPORT:process.env.PG_PORT,
-    AWS_CLIENT:process.env.AWS_CLIENT,
-    AWS_SECRET:process.env.AWS_SECRET
 }
 
