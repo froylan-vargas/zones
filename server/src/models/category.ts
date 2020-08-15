@@ -18,6 +18,7 @@ import {Model, Table, AutoIncrement, PrimaryKey, Column, AllowNull, NotEmpty } f
 export interface ICategory {
     id?: number | null;
     name: string;
+    isActive: boolean;
 }
 
 @Table(
@@ -28,6 +29,10 @@ export interface ICategory {
 )
 
 export default class Category extends Model implements ICategory {
+    @AllowNull(false)
+    @Column
+    isActive!: boolean;
+    
     @AutoIncrement
     @PrimaryKey
     @Column
