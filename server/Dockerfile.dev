@@ -3,4 +3,5 @@ WORKDIR "/app"
 COPY ./package.json ./
 RUN npm install
 COPY . .
-CMD ["npm", "run", "server"]
+RUN npm run build
+RUN node build/index.js

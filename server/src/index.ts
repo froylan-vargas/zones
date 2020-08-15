@@ -20,6 +20,8 @@ const start = async () => {
             console.log(`App listening on port:${PORT}`)
         })
     } catch (err) {
+        console.log('user',process.env.PG_USER)
+        console.log('new error');
         console.log(err);
     }
 }
