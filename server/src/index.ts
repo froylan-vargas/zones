@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 
-import router from './src/routes/index';
-import { sequelize } from './src/config/database';
+import router from './routes/index';
+import { sequelize } from './config/database';
 
 const app = express();
 
