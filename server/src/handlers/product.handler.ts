@@ -1,32 +1,8 @@
-const Sequelize = require('sequelize')
-const { sequelize } = require('../config/database')
+import Product from '../models/product.model';
+import { sequelize } from '../config/database';
 
-const Product = sequelize.define('product', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    categoryid: { type: Sequelize.INTEGER },
-    name: { type: Sequelize.TEXT },
-    description: { type: Sequelize.TEXT },
-    priority: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-    },
-    price: { type: Sequelize.NUMBER },
-    images: { type: Sequelize.TEXT },
-    createdon: {
-        type: 'TIMESTAMP',
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        allowNull: false
-    },
-    modifiedon: { type: 'TIMESTAMP' },
-    isactive: { type: Sequelize.BOOLEAN }
-}, { timestamps: false })
-
-const preTransformCurrentProducts = currentProducts => {
-    return currentProducts.map(product => {
+export const preTransformCurrentProducts = (currentProducts:[]) => {
+    return currentProducts.map((product:any) => {
         const transformedProduct = {
             id: product.id,
             categoryid: product.categoryid,
@@ -41,8 +17,8 @@ const preTransformCurrentProducts = currentProducts => {
     });
 }
 
-const productsToTemplateFormat = currentProducts => {
-    return currentProducts.map(product => {
+export const productsToTemplateFormat = (currentProducts:[]) => {
+    return currentProducts.map((product:any) => {
         return {
             name: product.name,
             price: product.price,
@@ -52,17 +28,17 @@ const productsToTemplateFormat = currentProducts => {
     });
 }
 
-const createTemplateData = transformedProducts => {
+export const createTemplateData = (transformedProducts:any) => {
     let templateData = [
         ['name', 'price', 'description', 'isactive']
     ]
-    transformedProducts.forEach(transformedProduct => {
+    transformedProducts.forEach((transformedProduct:any) => {
         templateData.push(Object.values(transformedProduct));
     });
     return templateData;
 }
 
-const getProducts = async () => {
+export const getProducts = async () => {
     try {
         return await Product.findAll({
             order: [
@@ -74,7 +50,7 @@ const getProducts = async () => {
     }
 }
 
-const getProductsByCategoryId = async (categoryid) => {
+export const getProductsByCategoryId = async (categoryid:any) => {
     try {
         const products = await Product.findAll({
             where: {
@@ -86,18 +62,18 @@ const getProductsByCategoryId = async (categoryid) => {
     }
 }
 
-const createProduct = async (product, transaction) => {
+export const createProduct = async (product:any, transaction:any) => {
     return Product.create(product, {
         fields: ['categoryid', 'name', 'description', 'price', 'createdon', 'modifiedon', 'isactive'],
         transaction
     })
 }
 
-const batchUpload = async (productsToUpload, availableProducts, categoryId) => {
+export const batchUpload = async (productsToUpload:any, availableProducts:any, categoryId:any) => {
     try {
         await sequelize.transaction(async (t) => {
-            const promises = [];
-            productsToUpload.forEach(async productToUpload => {
+            const promises:any = [];
+            productsToUpload.forEach(async (productToUpload:any) => {
                 productToUpload.categoryid = categoryId;
                 const availableProduct = availableProducts[productToUpload.name.toLowerCase()];
                 let promise = null;
@@ -107,7 +83,8 @@ const batchUpload = async (productsToUpload, availableProducts, categoryId) => {
                     productToUpload.modifiedon = new Date(Date.now());
                     promise = Product.update(productToUpload, {
                         where: { id: availableProduct.id },
-                    }, { transaction: t })
+                        transaction: t
+                    })
                 }
                 promises.push(promise);
             });
@@ -116,14 +93,4 @@ const batchUpload = async (productsToUpload, availableProducts, categoryId) => {
     } catch (err) {
         throw new Error(err);
     }
-}
-
-module.exports = {
-    Product,
-    preTransformCurrentProducts,
-    productsToTemplateFormat,
-    createTemplateData,
-    batchUpload,
-    getProductsByCategoryId,
-    getProducts
 }

@@ -1,23 +1,23 @@
-const inputValidators = require('./validationMethods.utils')
-const constants = require('../serverConstants.utils');
+import { inputValidators } from './validationMethods.utils';
+import { constants } from '../serverConstants.utils';
 
-const validatePrice = (value) => {
+export const validatePrice = (value: any) => {
     return inputValidators.isNumber(value)
         && inputValidators.greaterThanZero(value)
         && inputValidators.onlyTwoDecimals(value)
 };
 
-const validateCategory = (value) => {
+export const validateCategory = (value: any) => {
     const number = parseInt(value);
     return inputValidators.isNumber(number)
         && inputValidators.greaterThanZero(number);
 };
 
-const validatePriority = (value) => {
+export const validatePriority = (value: any) => {
     return inputValidators.isNumber(parseInt(value));
 }
 
-const validateProduct = (product) => {
+export const validateProduct = (product: any) => {
     const errors = [];
     const { categoryid, name, price, id, description, priority } = product;
     const { hasValue } = inputValidators;
@@ -32,7 +32,7 @@ const validateProduct = (product) => {
     return errors;
 };
 
-const validateUploadProduct = (product) => {
+export const validateUploadProduct = (product: any) => {
     const errors = [];
     const { name, price, description } = product;
     const { hasValue } = inputValidators;
@@ -46,10 +46,3 @@ const validateUploadProduct = (product) => {
         errors.push('el precio es invalido');
     return errors;
 }
-
-
-module.exports = {
-    validateProduct,
-    validateCategory,
-    validateUploadProduct
-} 

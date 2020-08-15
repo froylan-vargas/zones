@@ -1,8 +1,11 @@
-const { Product, getProductsByCategoryId, getProducts } = require('../models/product.model');
-const { sequelize } = require('../config/database');
-const productValidator = require('../utils/serverValidators/product-validators.utils');
+import { Request, Response } from 'express';
 
-const getAllProducts = async (req, res) => {
+import Product from '../models/product.model';
+import { sequelize } from '../config/database';
+import { validateProduct } from '../utils/serverValidators/product-validators.utils';
+import { getProducts, getProductsByCategoryId } from '../handlers/product.handler';
+
+export const getAllProducts = async (req: Request, res: Response) => {
     try {
         const products = await getProducts();
         res.json({
@@ -13,7 +16,7 @@ const getAllProducts = async (req, res) => {
     }
 }
 
-const getProductByCategoryId = async (req, res) => {
+export const getProductByCategoryId = async (req: Request, res: Response) => {
     const { categoryId } = req.params;
     try {
         const products = await getProductsByCategoryId(categoryId);
@@ -25,9 +28,9 @@ const getProductByCategoryId = async (req, res) => {
     }
 }
 
-const createProduct = async (req, res) => {
+export const createProduct = async (req: Request, res: Response) => {
     const product = req.body;
-    const errors = productValidator.validateProduct(product);
+    const errors = validateProduct(product);
     if (errors.length) {
         return res.json({ error: errors });
     }
@@ -47,10 +50,10 @@ const createProduct = async (req, res) => {
 
 }
 
-const updateProduct = async (req, res) => {
+export const updateProduct = async (req: Request, res: Response) => {
     const product = req.body;
-    const errors = productValidator.validateProduct(product);
-    
+    const errors = validateProduct(product);
+
     if (errors.length) {
         return res.json({ error: errors });
     }
@@ -68,11 +71,4 @@ const updateProduct = async (req, res) => {
         else errorMessage = 'Error al guardar el producto';
         res.json({ error: errorMessage }).status(400);
     }
-}
-
-module.exports = {
-    getAllProducts,
-    getProductByCategoryId,
-    createProduct,
-    updateProduct
 }
