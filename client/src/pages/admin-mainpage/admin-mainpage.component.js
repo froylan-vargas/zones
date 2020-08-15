@@ -21,4 +21,6 @@ const AdminMainpage = ({ match }) => {
     )
 }
 
+console.log('mini');
+
 export default AdminMainpage
