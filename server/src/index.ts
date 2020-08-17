@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import Umzug from 'umzug';
+import path from 'path';
 
 import router from './routes/index';
 import { sequelize } from './config/database';
@@ -14,14 +16,29 @@ app.use(router);
 const start = async () => {
     try {
         await sequelize.authenticate();
-        await sequelize.sync({force:true});
+        const umzug = new Umzug({
+            migrations: {
+                params: [
+                    sequelize.getQueryInterface(), // queryInterface
+                    sequelize.constructor, // DataTypes
+                ],
+                path: path.join(__dirname, 'migrations'),
+                pattern: process.env && process.env.NODE_ENV === 'development' ? /\.ts$/ : /\.js$/
+            },
+            storage: 'sequelize',
+            storageOptions: {
+                sequelize
+            }
+        });
+        const pendingMigrations = await umzug.pending();
+        if (pendingMigrations.length){
+            umzug.up(['schema.ts','init.data.ts']);
+        }
         const PORT = process.env.PORT || 5000
         app.listen(PORT, () => {
             console.log(`App listening on port:${PORT}`)
         })
     } catch (err) {
-        console.log('user',process.env.PG_USER)
-        console.log('new error');
         console.log(err);
     }
 }
