@@ -1,5 +1,6 @@
 import { inputValidators } from './validationMethods.utils';
 import { constants } from '../serverConstants.utils';
+import Product from '../../models/product.model';
 
 export const validatePrice = (value: any) => {
     return inputValidators.isNumber(value)
@@ -17,15 +18,15 @@ export const validatePriority = (value: any) => {
     return inputValidators.isNumber(parseInt(value));
 }
 
-export const validateProduct = (product: any) => {
+export const validateProduct:any|string[] = (product: Product) => {
     const errors = [];
-    const { categoryid, name, price, id, description, priority } = product;
+    const { categoryId, name, price, id, description, priority } = product;
     const { hasValue } = inputValidators;
-    if (!hasValue(id) || !hasValue(categoryid) || !hasValue(name) || !hasValue(description) || !hasValue(price))
+    if (!hasValue(categoryId) || !hasValue(name) || !hasValue(description) || !hasValue(price))
         return [constants.MISSING_INFORMATION];
     if (!validatePrice(price))
         errors.push('El precio es invalido.');
-    if (!validateCategory(categoryid))
+    if (!validateCategory(categoryId))
         errors.push('La categoria es invalida.');
     if (!validatePriority(priority))
         errors.push('La prioridad debe de ser un número.');

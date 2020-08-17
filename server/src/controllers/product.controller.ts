@@ -4,6 +4,8 @@ import Product from '../models/product.model';
 import { sequelize } from '../config/database';
 import { validateProduct } from '../utils/serverValidators/product-validators.utils';
 import { getProducts, getProductsByCategoryId } from '../handlers/product.handler';
+import { BeforeDestroy } from 'sequelize-typescript';
+import { categoryRouter } from '../routes/api/category.routes';
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -29,20 +31,25 @@ export const getProductByCategoryId = async (req: Request, res: Response) => {
 }
 
 export const createProduct = async (req: Request, res: Response) => {
-    const product = req.body;
+    const {categoryid,name,description,priority,price,isactive} = req.body;
+    let product = new  Product();
+    product.categoryId = categoryid;
+    product.name = name;
+    product.description = description;
+    product.priority = priority;
+    product.price = price;
+    product.isActive = isactive;
+    
     const errors = validateProduct(product);
     if (errors.length) {
         return res.json({ error: errors });
-    }
+    } 
 
     try {
-        const newProduct = await Product.create(product, {
-            fields: ['categoryid', 'name', 'description', 'price', 'images', 'createdon', 'modifiedon', 'isactive']
-        })
-
-        res.send(newProduct);
+        await product.save();
+        res.send({ message: 'product created' });
     } catch (error) {
-        let errorMessage = '';
+        let errorMessage = ''; 
         if (error.parent.code == 23505) errorMessage = 'El nombre de producto ya existe';
         else errorMessage = 'Error al guardar el producto';
         res.json({ error: errorMessage }).status(400);

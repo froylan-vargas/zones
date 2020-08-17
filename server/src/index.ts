@@ -14,14 +14,12 @@ app.use(router);
 const start = async () => {
     try {
         await sequelize.authenticate();
-        await sequelize.sync({force:true});
+        //await sequelize.sync({force:true});
         const PORT = process.env.PORT || 5000
         app.listen(PORT, () => {
             console.log(`App listening on port:${PORT}`)
         })
     } catch (err) {
-        console.log('user',process.env.PG_USER)
-        console.log('new error');
         console.log(err);
     }
 }

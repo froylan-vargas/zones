@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Category from '../models/category';
+import Category from '../models/category.model';
 
 export const getCategories = async (req: Request, res: Response) => {
     try {
@@ -9,7 +9,6 @@ export const getCategories = async (req: Request, res: Response) => {
         });
 
     } catch (err) {
-        console.log('in error', err);
-        res.status(400).json(err)
+        res.status(400).json(err);
     }
 }
