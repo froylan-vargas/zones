@@ -19,8 +19,8 @@ const start = async () => {
         const umzug = new Umzug({
             migrations: {
                 params: [
-                    sequelize.getQueryInterface(), // queryInterface
-                    sequelize.constructor, // DataTypes
+                    sequelize.getQueryInterface(),
+                    sequelize.constructor,
                 ],
                 path: path.join(__dirname, 'migrations'),
                 pattern: process.env && process.env.NODE_ENV === 'development' ? /\.ts$/ : /\.js$/
@@ -30,9 +30,13 @@ const start = async () => {
                 sequelize
             }
         });
+
+        const ext = process.env.NODE_ENV === 'development' ? '.ts' : '.js';
+        const schemaName = `schema${ext}`;
+        const dataName = `init.data${ext}`;
         const pendingMigrations = await umzug.pending();
         if (pendingMigrations.length){
-            umzug.up(['schema.ts','init.data.ts']);
+            umzug.up([schemaName,dataName]);
         }
         const PORT = process.env.PORT || 5000
         app.listen(PORT, () => {
