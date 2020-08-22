@@ -33,7 +33,7 @@ export const validateProduct:any|string[] = (product: Product) => {
     return errors;
 };
 
-export const validateUploadProduct = (product: any) => {
+export const validateUploadProduct = (product: Product) => {
     const errors = [];
     const { name, price, description } = product;
     const { hasValue } = inputValidators;

@@ -11,8 +11,8 @@ export const excelDownload = async (req: Request, res: Response) => {
     }
 
     try {
-        const currentProducts: any = await getProductsByCategoryId(categoryId);
-        if (!currentProducts.length) throw { code: 1 }
+        const currentProducts = await getProductsByCategoryId(categoryId);
+        if (!currentProducts?.length) throw { code: 1 }
         const preTransformedProducts = productsToTemplateFormat(currentProducts);
         const templateData = createTemplateData(preTransformedProducts);
         res.send(templateData);

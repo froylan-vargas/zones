@@ -44,7 +44,7 @@ const ProductEdit = ({ product, onSave, onInputChange, fieldErrors }) => {
                 <FormSwitch
                     label='Estatus'
                     onChange={onInputChange}
-                    checked={product.isactive}
+                    checked={product.isActive}
                 />
 
                 <div className='form__options'>

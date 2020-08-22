@@ -1,11 +1,8 @@
 import { QueryInterface } from 'sequelize';
-import { categories } from '../db/data/category.data';
+import { categoryQueries } from '../../../db/data/category.data';
 
 const up = async (query: QueryInterface) => {
-    Promise.all([
-        query.bulkDelete('category', {}, {}),
-        query.bulkInsert('category', categories)
-    ]);
+    Promise.all(categoryQueries);
 };
 
 const down = async (queryInterface: any) => {

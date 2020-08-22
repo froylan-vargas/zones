@@ -5,23 +5,26 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+}
 
-    //Initial
-    & + label {
-        font-size: 1.25em;
-        font-weight: 700;
-        color: $color-white;
-        background-color: $color-primary-light;
-        color: $color-tertiary;
-        display: inline-block;
-        cursor: pointer;
-        text-align: center;
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-    }
+.upload-options {
+    display: flex;
+}
 
-    //hover
-    & + label:hover {
+.upload-label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: $color-white;
+    background-color: $color-primary-light;
+    color: $color-tertiary;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    height: 5.2rem;
+    &:hover {
         background-color: $color-explosion;
     }
 }

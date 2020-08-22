@@ -10,7 +10,8 @@ const constants = {
     EXCEL_TYPES: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
     IMAGE_FILE_TYPES: 'image/jpeg, image/png',
     DESCRIPTION_MAX_CHARS: 82,
-    DOWNLOAD_FILENAME: 'Productos.xlsx'
+    DOWNLOAD_FILENAME: 'Productos.xlsx',
+    ASSETS_BUCKET: 'https://zones-assets.s3.us-east-2.amazonaws.com/'
 } 
 
 export default constants;

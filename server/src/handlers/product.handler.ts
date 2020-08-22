@@ -1,36 +1,37 @@
 import Product from '../models/product.model';
 import { sequelize } from '../config/database';
 
-export const preTransformCurrentProducts = (currentProducts:[]) => {
-    return currentProducts.map((product:any) => {
-        const transformedProduct = {
-            id: product.id,
-            categoryid: product.categoryid,
-            name: product.name,
-            price: product.price,
-            images: product.images,
-            createdOn: product.createdon,
-            modifiedOn: product.modifiedon,
-            isActive: product.isactive
-        }
+export const preTransformCurrentProducts = (currentProducts: Product[]) => {
+    return currentProducts.map((product: Product) => {
+        let transformedProduct = new Product();
+        transformedProduct.id = product.id;
+        transformedProduct.categoryId = product.categoryId;
+        transformedProduct.name = product.name;
+        transformedProduct.price = product.price;
+        transformedProduct.images = product.images;
+        transformedProduct.createdAt = product.createdAt;
+        transformedProduct.updatedAt = product.updatedAt;
+        transformedProduct.isActive = product.isActive;
         return transformedProduct;
     });
 }
 
-export const productsToTemplateFormat = (currentProducts:[]) => {
-    return currentProducts.map((product:any) => {
-        return {
+export const productsToTemplateFormat = (currentProducts: Product[]) => {
+    return currentProducts.map((product) => {
+        const transformedProduct = {
             name: product.name,
-            price: product.price,
             description: product.description,
-            isActive: product.isactive
-        }
+            price: product.price,
+            images: product.images,
+            isActive: product.isActive,
+        };
+        return transformedProduct;
     });
 }
 
 export const createTemplateData = (transformedProducts:any) => {
     let templateData = [
-        ['name', 'price', 'description', 'isactive']
+        ['name', 'description', 'price', 'images', 'isActive']
     ]
     transformedProducts.forEach((transformedProduct:any) => {
         templateData.push(Object.values(transformedProduct));
@@ -42,7 +43,7 @@ export const getProducts = async () => {
     try {
         return await Product.findAll({
             order: [
-                ['isactive', 'DESC'],
+                ['isActive', 'DESC'],
                 ['priority', 'DESC']
             ]
         });
@@ -50,11 +51,11 @@ export const getProducts = async () => {
     }
 }
 
-export const getProductsByCategoryId = async (categoryid:any) => {
+export const getProductsByCategoryId = async (categoryId: string) => {
     try {
-        const products = await Product.findAll({
+        const products: Product[] = await Product.findAll({
             where: {
-                categoryid
+                categoryId
             }
         })
         return products
@@ -62,27 +63,38 @@ export const getProductsByCategoryId = async (categoryid:any) => {
     }
 }
 
-export const createProduct = async (product:any, transaction:any) => {
+export const createProduct = async (product: Product, transaction: any) => {
+    let newProduct = new Product();
+    newProduct.categoryId = product.categoryId;
+    newProduct.name = product.name;
+    newProduct.description = product.description;
+    newProduct.priority = product.priority;
+    newProduct.price = product.price;
+    newProduct.isActive = product.isActive;
+    newProduct.images = product.images;
+    newProduct.createdAt = new Date(Date.now());
+    newProduct.updatedAt = new Date(Date.now());
+    console.log('new product', newProduct);
     return Product.create(product, {
-        fields: ['categoryid', 'name', 'description', 'price', 'createdon', 'modifiedon', 'isactive'],
+        fields: ['categoryId', 'name', 'images', 'description', 'price', 'createdAt', 'updatedAt', 'isActive'],
         transaction
     })
 }
 
-export const batchUpload = async (productsToUpload:any, availableProducts:any, categoryId:any) => {
+export const batchUpload = async (productsToUpload: Product[], availableProducts: any[any], categoryId: number) => {
     try {
         await sequelize.transaction(async (t) => {
-            const promises:any = [];
-            productsToUpload.forEach(async (productToUpload:any) => {
-                productToUpload.categoryid = categoryId;
-                const availableProduct = availableProducts[productToUpload.name.toLowerCase()];
+            const promises: any = [];
+            productsToUpload.forEach(async (productToUpload: Product) => {
+                productToUpload.categoryId = categoryId;
+                const availableProduct: Product = availableProducts[productToUpload.name.toLocaleLowerCase()];
                 let promise = null;
                 if (!availableProduct) {
                     promise = createProduct(productToUpload, t);
                 } else {
-                    productToUpload.modifiedon = new Date(Date.now());
+                    productToUpload.updatedAt = new Date(Date.now());
                     promise = Product.update(productToUpload, {
-                        where: { id: availableProduct.id },
+                        where: { id: availableProduct.id! },
                         transaction: t
                     })
                 }

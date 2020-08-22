@@ -20,12 +20,12 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
 
     const [formProduct, setProductProperties] = useState({
         id: product.id,
-        categoryid: product.categoryid,
+        categoryId: product.categoryId,
         name: product.name,
         description: product.description,
         price: product.price,
         priority: product.priority,
-        isactive: product.isactive
+        isActive: product.isActive
     });
 
     const [fieldErrors, setFieldError] = useState({
@@ -33,13 +33,13 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
         description: [],
         price: [],
         priority: [],
-        isactive: [],
+        isActive: [],
         optionId: []
     })
 
     const onInputChange = (event) => {
         if (event.target.name === 'isChecked') {
-            setProductProperties({ ...formProduct, isactive: event.target.checked })
+            setProductProperties({ ...formProduct, isActive: event.target.checked })
         } else {
             const { name, value } = event.target
             setProductProperties({ ...formProduct, [name]: value });
@@ -63,10 +63,10 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
     }
 
     const validateFullProduct = () => {
-        const categoryid = method === 'create' ? selectedCategory : formProduct.categoryid
+        const categoryId = method === 'create' ? selectedCategory : formProduct.categoryId
         const nameErrors = productValidators.validateProductName(formProduct.name);
         const priceErrors = productValidators.validatePrice(formProduct.price);
-        const categoryErrors = productValidators.validateCategory(categoryid);
+        const categoryErrors = productValidators.validateCategory(categoryId);
         const descriptionErrors = productValidators.validateDescription(formProduct.description);
         const priorityErrors = productValidators.validatePriority(formProduct.priority);
         return !nameErrors.length && !priceErrors.length && !categoryErrors.length && !descriptionErrors.length && !priorityErrors.length;
@@ -74,12 +74,12 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
 
     const saveProduct = async () => {
 
-        const categoryid = method === 'create' ? selectedCategory : formProduct.categoryid
+        const categoryId = method === 'create' ? selectedCategory : formProduct.categoryId
 
         const body = {
             id: formProduct.id,
-            categoryid,
-            isactive: formProduct.isactive,
+            categoryId,
+            isActive: formProduct.isActive,
             name: formProduct.name,
             price: formProduct.price,
             description: formProduct.description,
