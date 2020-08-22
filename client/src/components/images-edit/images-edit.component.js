@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import { createStructuredSelector } from 'reselect';
 
 import CustomCarousel from '../elements/carousel/carousel.component';
 import UploadFile from '../elements/upload-file/upload-file.component';
 import constants from '../../utils/constants.utils';
 import productValidators from '../../utils/validators/product-validators.utils';
+import { selectConfigs } from '../../redux/config/config.selectors';
 
-const ImagesEdit = ({ productId }) => {
-
+const ImagesEdit = ({ productId, configs }) => {
+    
     const [product, setProduct] = useState({});
     const [fetching, setFetching] = useState(false)
 
@@ -45,7 +48,7 @@ const ImagesEdit = ({ productId }) => {
     }
 
     const carouselInfo = images.map((image) => {
-        const url = `${constants.ASSETS_BUCKET}${product.id}/${image.name}`;
+        const url = `${configs['bucket-url'].value}${product.id}/${image.name}`;
         return (
             <div className="images-edit__slide" key={image.name}>
                 <img className="images-edit__image" src={url} alt={image.name} />
@@ -113,13 +116,17 @@ const ImagesEdit = ({ productId }) => {
                     />
                 </div>
             }
-            <div style={{height:"30rem"}}>
-            {
-                images.length && !fetching ? <CustomCarousel data={carouselInfo} /> : null
-            }
-            </div>  
+            <div style={{ height: "30rem" }}>
+                {
+                    images.length && !fetching ? <CustomCarousel data={carouselInfo} /> : null
+                }
+            </div>
         </div>
     )
 }
 
-export default ImagesEdit;  
+const mapDispatchToProps = createStructuredSelector({
+    configs: selectConfigs
+});
+
+export default connect(mapDispatchToProps)(ImagesEdit);  

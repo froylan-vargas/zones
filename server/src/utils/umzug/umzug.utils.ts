@@ -21,7 +21,7 @@ const umzug = new Umzug({
 
 const migrate = async () => {
     const ext = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
-    const version = 1;
+    const version = 2;
     const schemaName = `schema.${version}.${ext}`;
     const dataName = `init.data.${version}.${ext}`;
     const executedMigrations = await umzug.executed();
