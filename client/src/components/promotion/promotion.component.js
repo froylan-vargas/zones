@@ -19,7 +19,7 @@ const Promotion = () => {
                 </div>
             </div>
             <div className="promotion--right">
-                <img className="promotion__image" src="https://zones-images.s3.us-east-2.amazonaws.com/promo-flower.png" alt="promotion product" />
+                {/* <img className="promotion__image" src="https://zones-images.s3.us-east-2.amazonaws.com/promo-flower.png" alt="promotion product" /> */}
             </div>
         </div>
     )

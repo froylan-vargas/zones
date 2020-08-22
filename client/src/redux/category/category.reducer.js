@@ -10,11 +10,6 @@ const INITIAL_STATE = {
 
 const categoryReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case CategoryActionTypes.FETCH_CATEGORIES_START:
-            return {
-                ...state,
-                isFetching: true
-            }
         case CategoryActionTypes.FETCH_CATEGORIES_SUCCESS:
             return {
                 ...state,

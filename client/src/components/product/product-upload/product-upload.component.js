@@ -13,7 +13,6 @@ import notificationUtils from '../../../utils/notification.utils';
 import constants from '../../../utils/constants.utils';
 
 import CategoriesContainer from '../../categories-select-container/categories-select-container.component';
-import Button from '../../elements/button/button.component';
 import UploadFile from '../../elements/upload-file/upload-file.component';
 
 const ProductUpload = ({ fetchProductsStart, setNotification, categoryId, setCategory, setEditOptions }) => {

@@ -5,6 +5,7 @@ export default {
     PGPASSWORD:process.env.PG_PASSWORD || '',
     PGPORT:process.env.PG_PORT || '',
     UPLOADKEY:process.env.UPLOAD_KEY || '',
-    UPLOADSECRET:process.env.UPLOAD_SECRET || ''
+    UPLOADSECRET:process.env.UPLOAD_SECRET || '',
+    ASSETS_BUCKET:process.env.ASSETS_BUCKET || ''
 }
 

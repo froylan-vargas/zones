@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import constants from '../../utils/constants.utils';
 import { selectProducts, selectIsFetchingProducts, selectEditOptions } from '../../redux/product/product.selectors';
-import { fetchProductsStart, setEditOptions } from '../../redux/product/product.actions';
+import { setEditOptions } from '../../redux/product/product.actions';
 import { fetchCategoriesStart } from '../../redux/category/category.actions';
 
 import ProductModify from '../../components/product/product-modify/product.modify.component';
@@ -15,15 +15,16 @@ import EditWindow from '../../components/edit-window/edit-window.component';
 import ProductUpload from '../../components/product/product-upload/product-upload.component';
 import ProductDownload from '../../components/product/product-download/product-download.component';
 
-class AdminProductsPage extends Component {
+const AdminProductsPage = ({ fetchCategoriesStart, products, isFetchingProducts, editOptions }) => {
 
-    componentDidMount() {
-        const { fetchProductsStart, fetchCategoriesStart } = this.props;
-        fetchProductsStart();
-        fetchCategoriesStart();
-    }
+    useEffect(() => {
+        async function fetch() {
+            await fetchCategoriesStart();
+        };
+        fetch();
+    }, [fetchCategoriesStart]);
 
-    switchEditType = (editOptions) => {
+    const switchEditType = () => {
         switch (editOptions.type) {
             case constants.EDIT_PRODUCT:
                 return <ProductModify editOptions={editOptions} />
@@ -42,24 +43,21 @@ class AdminProductsPage extends Component {
         }
     }
 
-    render() {
-        const { products, isFetchingProducts, editOptions } = this.props;
-        return (
-            <div className='admin-products-page'>
-                {
-                    editOptions && editOptions.showEditWindow
-                        ? <EditWindow purpose={editOptions.purpose}>
-                            {
-                                this.switchEditType(editOptions)
-                            }
-                        </EditWindow>
-                        : null
-                }
-                <ProductOptions />
-                <ProductAdminList products={products} isFetchingProducts={isFetchingProducts} />
-            </div>
-        )
-    }
+    return (
+        <div className='admin-products-page'>
+            {
+                editOptions && editOptions.showEditWindow
+                    ? <EditWindow purpose={editOptions.purpose}>
+                        {
+                            switchEditType()
+                        }
+                    </EditWindow>
+                    : null
+            }
+            <ProductOptions />
+            <ProductAdminList products={products} isFetchingProducts={isFetchingProducts} />
+        </div>
+    )
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -69,7 +67,6 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchProductsStart: () => dispatch(fetchProductsStart()),
     setEditOptions: editOptions => dispatch(setEditOptions(editOptions)),
     fetchCategoriesStart: () => dispatch(fetchCategoriesStart())
 })
