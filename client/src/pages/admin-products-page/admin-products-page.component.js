@@ -28,7 +28,7 @@ class AdminProductsPage extends Component {
             case constants.EDIT_PRODUCT:
                 return <ProductModify editOptions={editOptions} />
             case constants.EDIT_IMAGES:
-                return <ImagesEdit product={editOptions.product} />
+                return <ImagesEdit productId={editOptions.product.id} />
             case constants.IMAGES_UPLOAD:
                 return <ImagesEdit />
             case constants.CREATE_PRODUCT:

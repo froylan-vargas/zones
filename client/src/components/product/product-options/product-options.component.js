@@ -11,7 +11,7 @@ const ProductOptions = ({ setEditOptions, setCategory }) => {
 
     const product = {
         id: '0',
-        isactive: true,
+        isActive: true,
         name: '',
         description: '',
         priority: 0,

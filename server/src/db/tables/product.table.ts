@@ -13,7 +13,7 @@ const productTable = {
       type: sequelize.INTEGER,
       references: {
         model: 'category',
-        key: 'id'
+        key: 'id',
       },
       allowNull: false
     },

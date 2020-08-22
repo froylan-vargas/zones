@@ -16,7 +16,7 @@ import CategoriesContainer from '../../categories-select-container/categories-se
 import Button from '../../elements/button/button.component';
 import UploadFile from '../../elements/upload-file/upload-file.component';
 
-const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCategory, setEditOptions }) => {
+const ProductUpload = ({ fetchProductsStart, setNotification, categoryId, setCategory, setEditOptions }) => {
 
     const [file, setFile] = useState({});
     const [fieldErrors, setFieldError] = useState({
@@ -25,7 +25,7 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
     });
 
     const validateUpload = () => {
-        return !productValidators.validateCategory(categoryid).length
+        return !productValidators.validateCategory(categoryId).length
             && file.name
     }
 
@@ -33,7 +33,7 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
         var reader = new FileReader();
         reader.onload = async function (e) {
             const excelData = readExcelFile(new Uint8Array(e.target.result));
-            const fileResult = await axios.post(`/api/upload/products/${categoryid}`, { data: excelData });
+            const fileResult = await axios.post(`/api/upload/products/${categoryId}`, { data: excelData });
             if (!fileResult.data.error) {
                 fetchProductsStart();
             }
@@ -50,7 +50,7 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
         else {
             setFieldError({
                 ...fieldErrors,
-                optionId: productValidators.validateCategory(categoryid),
+                optionId: productValidators.validateCategory(categoryId),
                 file: productValidators.validateFile(file)
             });
         }
@@ -68,10 +68,8 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
                         setFile = {setFile}
                         setFieldError = {setFieldError}
                         label = {'Seleccione un archivo'}
+                        onUpload = {onFileUpload}
                     />
-                </div>
-                <div className="product-upload__options">
-                    <Button modifier='white' onClick={onFileUpload}>Subir productos</Button>
                 </div>
             </form>
         </div>
@@ -79,7 +77,7 @@ const ProductUpload = ({ fetchProductsStart, setNotification, categoryid, setCat
 }
 
 const mapStateToProps = createStructuredSelector({
-    categoryid: selectSelectedCategory
+    categoryId: selectSelectedCategory
 });
 
 const mapDispatchToProps = dispatch => ({

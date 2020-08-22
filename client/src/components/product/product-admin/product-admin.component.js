@@ -7,7 +7,7 @@ import constants from '../../../utils/constants.utils'
 import Button from '../../elements/button/button.component'
 
 const ProductAdmin = ({ product, setEditOptions }) => {
-    const { id, name, price, isactive, description, priority } = product;
+    const { id, name, price, isActive, description, priority } = product;
 
     const displayDescription = description.length < constants.DESCRIPTION_MAX_CHARS ? description : `${description.substring(0,constants.DESCRIPTION_MAX_CHARS - 1)}...`; 
 
@@ -43,7 +43,7 @@ const ProductAdmin = ({ product, setEditOptions }) => {
                         </div>
                         <div>
                             <span className='product-admin__label'>Estatus:</span>
-                            <span className='product-admin__value'>{isactive ? 'Activo' : 'Inactivo'}</span>
+                            <span className='product-admin__value'>{isActive ? 'Activo' : 'Inactivo'}</span>
                         </div>
                     </div>
                     <div className='product-admin__options'>

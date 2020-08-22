@@ -1,11 +1,11 @@
 import { QueryInterface } from "sequelize";
-import {categoryTable} from '../db/tables/category.table';
-import {productTable} from '../db/tables/product.table';
+import {categoryTable} from '../../../db/tables/category.table';
+import {productTable} from '../../../db/tables/product.table';
 
 const up = async (query: QueryInterface) => {
   Promise.all([
     query.createTable(categoryTable.name,categoryTable.definition),
-    query.createTable(productTable.name,productTable.definition)
+    query.createTable(productTable.name,productTable.definition) 
   ]);
 };
 
