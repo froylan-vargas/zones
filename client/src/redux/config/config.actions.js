@@ -7,7 +7,6 @@ export const fetchConfigStart = () => {
 }
 
 export const fetchConfigSuccess = configs => {
- console.log('actions',configs);
     return {
     type: ConfigActionTypes.FETCH_CONFIG_SUCCESS,
     payload: configs

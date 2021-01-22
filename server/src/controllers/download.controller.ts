@@ -1,23 +1,12 @@
 import { Request, Response } from 'express';
-
 import { getProductsByCategoryId, productsToTemplateFormat, createTemplateData } from '../handlers/product.handler';
-import { validateCategory } from '../utils/serverValidators/product-validators.utils';
+import { BadRequestError } from '../errors/bad-request-error';
 
-export const excelDownload = async (req: Request, res: Response) => {
+export const getProductsTemplate = async (req: Request, res: Response) => {
     const { categoryId } = req.params;
-
-    if (!validateCategory(categoryId)) {
-        return res.json({ error: 'Categoria invalida' });
-    }
-
-    try {
-        const currentProducts = await getProductsByCategoryId(categoryId);
-        if (!currentProducts?.length) throw { code: 1 }
-        const preTransformedProducts = productsToTemplateFormat(currentProducts);
-        const templateData = createTemplateData(preTransformedProducts);
-        res.send(templateData);
-    } catch (err) {
-        const error = err.code === 1 ? 'No hay productos en la catgoría' : 'No fue posible descargar el archivo';
-        res.send({ error });
-    }
-}
+    const currentProducts = await getProductsByCategoryId(categoryId);
+    if (!currentProducts?.length) throw new BadRequestError('No hay productos en esta categoría');
+    const preTransformedProducts = productsToTemplateFormat(currentProducts);
+    const templateData = createTemplateData(preTransformedProducts);
+    res.status(200).send(templateData);
+};

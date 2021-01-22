@@ -8,8 +8,8 @@ function* fetchConfigsAsync() {
     try {
         const configs = yield call(() => { return axios.get(`/api/config`) })
         yield put(fetchConfigSuccess(configs.data))
-    } catch (error) {
-        yield put(fetchConfigFailure(error.message))
+    } catch (err) {
+        yield put(fetchConfigFailure(err.response.data.errors))
     }
 }
 

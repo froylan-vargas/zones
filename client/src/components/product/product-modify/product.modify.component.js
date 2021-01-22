@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect'
-import axios from 'axios';
+import { createStructuredSelector } from 'reselect';
 
-import { setEditOptions, fetchProductsStart } from '../../../redux/product/product.actions';
-import { setResultNotification } from '../../../redux/notification/notification.actions';
+import { fetchProductsStart } from '../../../redux/product/product.actions';
 import productValidators from '../../../utils/validators/product-validators.utils';
 import { selectSelectedCategory } from '../../../redux/category/category.selectors';
-import { setSelectedCategory } from '../../../redux/category/category.actions';
-import notificationUtils from '../../../utils/notification.utils';
 
-import EditProduct from '../product-edit/product-edit.component'
-import CreateProduct from '../product-create/product-create.component'
+import EditProduct from '../product-edit/product-edit.component';
+import CreateProduct from '../product-create/product-create.component';
+import AdminUseRequest from '../../admin/admin-use-request.component';
 
 
-const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setResultNotification, selectedCategory, setSelectedCategory }) => {
+const ProductModify = ({ editOptions, fetchProductsStart, selectedCategory }) => {
 
     const { product, method } = editOptions;
 
@@ -35,6 +32,22 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
         priority: [],
         isActive: [],
         optionId: []
+    })
+
+    const {doRequest}  = AdminUseRequest({
+        url: method === 'create' ? '/api/product' : `/api/product/${product.id}`,
+        method: method === 'create' ? 'post' : 'put',
+        successMessage: 'El producto se guardo exitosamente',
+        body: {
+            id: formProduct.id,
+            categoryId: method === 'create' ? selectedCategory : formProduct.categoryId,
+            isActive: formProduct.isActive,
+            name: formProduct.name,
+            price: formProduct.price,
+            description: formProduct.description,
+            priority: formProduct.priority
+        },
+        onSuccess: () => fetchProductsStart()
     })
 
     const onInputChange = (event) => {
@@ -72,37 +85,9 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
         return !nameErrors.length && !priceErrors.length && !categoryErrors.length && !descriptionErrors.length && !priorityErrors.length;
     }
 
-    const saveProduct = async () => {
-
-        const categoryId = method === 'create' ? selectedCategory : formProduct.categoryId
-
-        const body = {
-            id: formProduct.id,
-            categoryId,
-            isActive: formProduct.isActive,
-            name: formProduct.name,
-            price: formProduct.price,
-            description: formProduct.description,
-            priority: formProduct.priority
-        }
-
-        let result;
-
-        method === 'create' ? result = await axios.post('/api/product/create', body)
-            : result = await axios.put('/api/product/update', body)
-
-
-        if (!result.data.error) {
-            fetchProductsStart();
-        }
-        setEditOptions({ setShowEditWindow: false });
-        setSelectedCategory("0");
-        setResultNotification(notificationUtils.createNotification(result, 'El producto se guardo exitosamente'));
-    }
-
     const onSave = (e) => {
         e.preventDefault();
-        if (validateFullProduct()) saveProduct();
+        if (validateFullProduct()) doRequest();
         else {
             setFieldError({
                 ...fieldErrors,
@@ -122,11 +107,8 @@ const ProductModify = ({ editOptions, setEditOptions, fetchProductsStart, setRes
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    setEditOptions: editOptions => dispatch(setEditOptions(editOptions)),
-    fetchProductsStart: () => dispatch(fetchProductsStart()),
-    setResultNotification: notification => dispatch(setResultNotification(notification)),
-    setSelectedCategory: selectedCategory => dispatch(setSelectedCategory(selectedCategory))
+const mapDispatchToProps = dispatch => ({    
+    fetchProductsStart: () => dispatch(fetchProductsStart())
 })
 
 const mapStateToProps = createStructuredSelector({

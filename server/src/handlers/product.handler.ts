@@ -29,11 +29,11 @@ export const productsToTemplateFormat = (currentProducts: Product[]) => {
     });
 }
 
-export const createTemplateData = (transformedProducts:any) => {
+export const createTemplateData = (transformedProducts: any) => {
     let templateData = [
         ['name', 'description', 'price', 'images', 'isActive']
     ]
-    transformedProducts.forEach((transformedProduct:any) => {
+    transformedProducts.forEach((transformedProduct: any) => {
         templateData.push(Object.values(transformedProduct));
     });
     return templateData;
@@ -58,7 +58,7 @@ export const getProductsByCategoryId = async (categoryId: string) => {
                 categoryId
             }
         })
-        return products
+        return products;
     } catch (err) {
     }
 }
@@ -74,7 +74,6 @@ export const createProduct = async (product: Product, transaction: any) => {
     newProduct.images = product.images;
     newProduct.createdAt = new Date(Date.now());
     newProduct.updatedAt = new Date(Date.now());
-    console.log('new product', newProduct);
     return Product.create(product, {
         fields: ['categoryId', 'name', 'images', 'description', 'price', 'createdAt', 'updatedAt', 'isActive'],
         transaction

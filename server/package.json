@@ -6,7 +6,15 @@
   "scripts": {
     "start": "node build/index.js && cd build && sequelize db:migrate",
     "server": "ts-node-dev --poll src/index.ts",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "jest --watchAll --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
   },
   "author": "fvgworld",
   "license": "ISC",
@@ -21,6 +29,8 @@
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.6.1",
     "nodemon": "^2.0.4",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
@@ -30,5 +40,12 @@
     "ts-node-dev": "^1.0.0-pre.57",
     "typescript": "^3.9.7",
     "umzug": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/supertest": "^2.0.10",
+    "jest": "^26.4.2",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.3.0"
   }
 }

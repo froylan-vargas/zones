@@ -38,7 +38,7 @@ export const validateUploadProduct = (product: Product) => {
     const { name, price, description } = product;
     const { hasValue } = inputValidators;
     if (!hasValue(name))
-        errors.push([constants.MISSING_INFORMATION]);
+        errors.push('el nombre del producto es requerido');
     if (!hasValue(description))
         errors.push('la descripción es requerida')
     if (!hasValue(price))

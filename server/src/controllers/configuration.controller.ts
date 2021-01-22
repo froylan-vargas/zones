@@ -4,6 +4,7 @@ import Configuration from '../models/configuration.model';
 import {transformArrayToObject} from '../utils/array';
 
 export const getConfigs = async (req: Request, res: Response) => {
+    
     const configs = await Configuration.findAll({
         where: {
             isActive: true

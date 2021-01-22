@@ -1,11 +1,11 @@
 const notificationUtils = {
-    createNotification: (resp, successMessage) => {
+    createNotification: (errors, successMessage) => {
         let notification;
-        if (resp.data.error)
+        if (errors.length)
             notification = {
                 visible: true,
                 isError: true,
-                message: resp.data.error
+                message: errors
             }
         else
             notification = {

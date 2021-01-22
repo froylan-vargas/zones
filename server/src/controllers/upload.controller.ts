@@ -3,25 +3,23 @@ import Product from '../models/product.model';
 
 import { getProductsByCategoryId, batchUpload, preTransformCurrentProducts } from '../handlers/product.handler';
 import { transformArrayToObject } from '../utils/array';
-import { validateCategory, validateUploadProduct } from '../utils/serverValidators/product-validators.utils';
+import { validateUploadProduct } from '../utils/serverValidators/product-validators.utils';
+import { UploadValidationError } from '../errors/upload-validation-error';
 
-export const excelUpload = async (req: Request, res: Response) => {
+export const uploadProducts = async (req: Request, res: Response) => {
     const { categoryId } = req.params;
     const { data } = req.body;
-    if (!validateCategory(categoryId)) {
-        return res.json({ error: 'Categoria invalida' });
-    }
 
-    const uploadErrors = data.reduce((result: [string], product: Product, i: number) => {
+    const uploadErrors = data.reduce((result: [Error], product: Product, i: number) => {
         const errors = validateUploadProduct(product);
         if (errors.length) {
-            result.push(`error en la fila ${i + 2}: ${errors.join(', ')}`);
+            result.push(new Error(`error en la fila ${i + 2}: ${errors.join(', ')}`));
         }
         return result;
     }, []);
 
     if (uploadErrors.length) {
-        return res.send({ error: uploadErrors });
+        throw new UploadValidationError(uploadErrors);
     }
 
     const currentProducts: Product[] | undefined = await getProductsByCategoryId(categoryId);
@@ -33,10 +31,10 @@ export const excelUpload = async (req: Request, res: Response) => {
 
     try {
         await batchUpload(data, transformed, parseInt(categoryId));
-        res.send("Upload succees");
+        res.status(200).send("Upload succees");
     }
     catch (error) {
-        res.send({ error: 'No fue posible subir los productos' });
+        throw new Error(error);
     }
 }
 
